@@ -80,7 +80,7 @@ while Running:
     cur=pow(2,random.randint(1,6))
     pygame.draw.rect(screen, col_list[int(getBaseLog(2,cur))-1], (161,81,38,38), 0)
     pygame.display.update()
-    print(getBaseLog(2,cur))
+    # print(getBaseLog(2,cur))
     text=font.render(str(cur),True,(255,0,100),col_list[int(getBaseLog(2,cur))-1])
     screen.blit(text,(170,85))
     pygame.display.update()
