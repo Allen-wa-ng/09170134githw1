@@ -4,6 +4,8 @@ import sys
 import random
 import math
 from time import sleep
+def getBaseLog(x, y):
+  return math.log(y) / math.log(x)
 
 #initial set up
 pygame.init()
@@ -39,7 +41,7 @@ font=pygame.font.Font('freesansbold.ttf',32)
 text=font.render('Drop The Number!', True,(0,100,0))
 screen.blit(text,(110,35))
 #NEXT BLOCK
-font=pygame.font.SysFont('arialunicode',18)
+font=pygame.font.SysFont('dejavusans',18)
 text=font.render('Next Block ▶ ', True,(255,0,100))
 screen.blit(text,(55,85))
 #SCORE
@@ -51,22 +53,20 @@ font=pygame.font.Font('freesansbold.ttf',20)
 text=font.render('II', True,(0,0,0))
 screen.blit(text,(57,689))
 #ARROW DOWN
-font=pygame.font.SysFont('arialunicode',40)
+font=pygame.font.SysFont('dejavusans',40)
 text=font.render('⇟', True,(0,0,0))
 for i in range(7):
     screen.blit(text,(85+i*50,145))
 #ARROW R&L
-font=pygame.font.SysFont('arialunicode',30)
 text=font.render('↔', True,(0,0,0))
 screen.blit(text,(387,673))
 #ARROW UP&DOWN
-font=pygame.font.SysFont('arialunicode',30)
 text=font.render('↕', True,(0,0,0))
 screen.blit(text,(422,676.5))
 
+font=pygame.font.SysFont('dejavusans',30)
 #RANDOM NUMBER
 #NEXT BLOCK NUMBER
-font=pygame.font.SysFont('arialunicode',18)
 random.seed()
 
 #color array
@@ -78,10 +78,10 @@ Running=True
 cur =0
 while Running:
     cur=pow(2,random.randint(1,6))
-    text=font.render('     ',True,(255,0,100),col_list[int(math.log(2,cur))])
-    screen.blit(text,(165,85))
+    pygame.draw.rect(screen, col_list[int(getBaseLog(2,cur))-1], (161,81,38,38), 0)
     pygame.display.update()
-    text=font.render(str(cur),True,(255,0,100),col_list[int(math.log(2,cur))])
+    print(getBaseLog(2,cur))
+    text=font.render(str(cur),True,(255,0,100),col_list[int(getBaseLog(2,cur))-1])
     screen.blit(text,(170,85))
     pygame.display.update()
     sleep(1)
@@ -89,10 +89,5 @@ while Running:
         if event.type==pygame.QUIT:
             pygame.quit()
             quit()
-    
-
-
-
-
 #UPDATE
 pygame.display.update()
