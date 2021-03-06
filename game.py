@@ -38,7 +38,7 @@ pygame.display.update()
 #textbox
 #TITLE
 font=pygame.font.Font('freesansbold.ttf',32)
-text=font.render('Drop The Number!', True,(0,100,0))
+text=font.render('Drop The Number!', True,(0,200,0))
 screen.blit(text,(110,35))
 #NEXT BLOCK
 font=pygame.font.SysFont('dejavusans',18)
@@ -70,8 +70,8 @@ font=pygame.font.SysFont('dejavusans',30)
 random.seed()
 
 #color array
-col_list=[(0,255,0),(0,160,250),(0,255,255)
-,(42,151,0),(42,151,188),(42,183,143),(179,140,143)]
+col_list=[(255,0,0),(0,255,0),(204,153,255),(209,237,0),(209,237,240),
+(209,40,240),(254,239,222),(0,239,222),(255,255,80),(51,102,255),(255,204,164),(153,255,153),(194,194,214)]
 
 #RUNNING
 Running=True
@@ -81,7 +81,7 @@ while Running:
     pygame.draw.rect(screen, col_list[int(getBaseLog(2,cur))-1], (161,81,38,38), 0)
     pygame.display.update()
     # print(getBaseLog(2,cur))
-    text=font.render(str(cur),True,(255,0,100),col_list[int(getBaseLog(2,cur))-1])
+    text=font.render(str(cur),True,(0,0,0),col_list[int(getBaseLog(2,cur))-1])
     screen.blit(text,(170,85))
     pygame.display.update()
     sleep(1)
