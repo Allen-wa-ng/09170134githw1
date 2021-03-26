@@ -113,9 +113,11 @@ Running=True
 cur=pow(2,random.randint(1,9))
 moving =226
 index=75+70*(random.randint(1,5)-1)
+random.seed()
+next_num = pow(2,random.randint(1,9))
 
 while Running:
-
+    
     set_background()
     draw_lc()
 
@@ -131,20 +133,21 @@ while Running:
     createText('II', 'arial.ttf',28,(255,255,255),(63,692))
     for i in range(5):
         createText('†', 'arial.ttf',47,(255,0,0),(98+i*70,161))
-
     #number set
-    pygame.draw.rect(screen, col_list[int(getBaseLog(2,cur))-1], (175,81,38,38), 0)
-    createText(str(cur),'arial.ttf',20,black,(168+25-len(str(cur))*5,89))
-
-
+    pygame.draw.rect(screen, col_list[int(getBaseLog(2,next_num))-1], (175,81,38,38), 0)
+    createText(str(next_num),'arial.ttf',20,black,(168+25-len(str(next_num))*5,89))
+    
+    # print(next_num)
+    
     #block moving
     create_block(index,moving,cur)
     moving+=0.3
     if moving >582:
-        cur=pow(2,random.randint(1,9))
+        cur=next_num
+        next_num = pow(2, random.randint(1,9))
         moving=226
         index=76+70*(random.randint(1,5)-1)
-         
+     
     #quit
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
