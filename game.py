@@ -4,8 +4,6 @@ import sys
 import random
 import math
 from time import sleep
-import tkinter
-import tkinter.messagebox
 import time
 
 #initial set up
@@ -19,6 +17,7 @@ start_time=time.time()
 #color set
 colorName=(255,200,200)
 color=(255,255,255)
+black=(0,0,0)
 
 #screen set up
 screen=pygame.display.set_mode((500,750))
@@ -58,12 +57,12 @@ def create_block(x,y, value):
     # filled block
     a=pygame.draw.rect(screen, col_list[int(getBaseLog(2,value))-1], (x,y,68,68), 0)
     # borders
-    b=pygame.draw.rect(screen,(0,0,0), (x,y,68,68), 4)
+    b=pygame.draw.rect(screen,black, (x,y,68,68), 4)
     # font
     font=pygame.font.Font('arial.ttf',30)
     # print(getBaseLog(2,cur))
     textX =x+26-len(str(cur))*5
-    text=font.render(str(cur),True,(0,0,0),col_list[int(getBaseLog(2,cur))-1])
+    text=font.render(str(cur),True,black,col_list[int(getBaseLog(2,cur))-1])
     screen.blit(text,(textX,y+15))
     return a,b,text,value,x,y
 
@@ -123,7 +122,7 @@ while Running:
     #Time 
     end_time=time.time()
     dur=end_time-start_time
-    createText('TIME:'+getTimeformat(dur),'arial.ttf',20,(0,0,0),(315,91))
+    createText('TIME:'+getTimeformat(dur),'arial.ttf',20,black,(315,91))
 
     #Text 
     createText('Drop The Number!', 'arial.ttf',32, (255,255,80), (110,35))
@@ -135,7 +134,7 @@ while Running:
 
     #number set
     pygame.draw.rect(screen, col_list[int(getBaseLog(2,cur))-1], (175,81,38,38), 0)
-    createText(str(cur),'arial.ttf',20,(0,0,0),(168+25-len(str(cur))*5,89))
+    createText(str(cur),'arial.ttf',20,black,(168+25-len(str(cur))*5,89))
 
 
     #block moving
