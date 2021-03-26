@@ -61,8 +61,8 @@ def create_block(x,y, value):
     # font
     font=pygame.font.Font('arial.ttf',30)
     # print(getBaseLog(2,cur))
-    textX =x+26-len(str(cur))*5
-    text=font.render(str(cur),True,black,col_list[int(getBaseLog(2,cur))-1])
+    textX =x+26-len(str(value))*5
+    text=font.render(str(value),True,black,col_list[int(getBaseLog(2,value))-1])
     screen.blit(text,(textX,y+15))
     return a,b,text,value,x,y
 
@@ -101,7 +101,7 @@ def draw_lc():
 #NEXT BLOCK NUMBER
 random.seed()
 
-#array 
+# blocks array 
 blocks=[]
 for i in range(6):
     blocks.append([])
