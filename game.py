@@ -109,7 +109,7 @@ for i in range(6):
 Running=True
 cur=pow(2,random.randint(1,9))
 moving =226
-col_n = random.randint(1,5)-1
+col_n = random.randint(1,5)
 index=75+70*col_n
 random.seed()
 next_num = pow(2,random.randint(1,9))
@@ -140,26 +140,25 @@ while Running:
     #block moving
     create_block(index,moving,cur)
     moving+=1
-    print(blocks)
+    # print(blocks)
     try:
         max_moving = 582-70*(len(blocks[col_n]))
     except:
         max_moving = 582
+    print(col_n)
     if moving >max_moving:
         moving=226
-        index=76+70*col_n
         l1 = []
         l1.append(cur)
-        l1.append(76+70*col_n)
+        l1.append(index)
         l1.append(max_moving)
         blocks[col_n].append(l1)
+        random.seed()
         col_n = random.randint(1,5)-1
         cur=next_num
         next_num = pow(2, random.randint(1,9))
+        index=76+70*col_n
     
-    for dica in blocks:
-        for dic in dica:
-            create_block(dic[1], dic[2], dic[0])
     #quit
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -168,18 +167,22 @@ while Running:
         if event.type==pygame.MOUSEBUTTONDOWN:
             print(pygame.mouse.get_pos())
             moving=226
-            index=76+70*col_n
             l1 = []
             l1.append(cur)
-            l1.append(76+70*col_n)
+            l1.append(index)
             l1.append(max_moving)
             blocks[col_n].append(l1)
+            random.seed()
             col_n = random.randint(1,5)-1
             cur=next_num
             next_num = pow(2, random.randint(1,9))
+            index=76+70*col_n
  
 
         
     #UPDATE
+    for dica in blocks:
+        for dic in dica:
+            create_block(dic[1], dic[2], dic[0])
     pygame.display.update()
 
