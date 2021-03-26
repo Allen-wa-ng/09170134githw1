@@ -136,18 +136,19 @@ while Running:
     #number set
     pygame.draw.rect(screen, col_list[int(getBaseLog(2,next_num))-1], (175,81,38,38), 0)
     createText(str(next_num),'arial.ttf',20,black,(168+25-len(str(next_num))*5,89))
-    
+        
     # print(next_num)
     
     #block moving
     create_block(index,moving,cur)
     moving+=0.3
+    
     if moving >582:
         cur=next_num
         next_num = pow(2, random.randint(1,9))
         moving=226
-        index=76+70*(random.randint(1,5)-1)
-     
+        index=76+70*(random.randint(1,5)-1) 
+
     #quit
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -155,6 +156,11 @@ while Running:
             quit()
         if event.type==pygame.MOUSEBUTTONDOWN:
             print(pygame.mouse.get_pos())
+            cur=next_num
+            next_num = pow(2, random.randint(1,9))
+            moving=226
+            index=76+70*(random.randint(1,5)-1)     
+
 
         
     #UPDATE
