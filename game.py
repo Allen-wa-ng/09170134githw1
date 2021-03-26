@@ -102,20 +102,16 @@ def draw_lc():
 random.seed()
 
 #array 
-col1=[6]
-col2=[6]
-col3=[6]
-col4=[6]
-col5=[6]
-
+blocks=[5]
 #RUNNING
 Running=True
 cur=pow(2,random.randint(1,9))
 moving =226
-index=75+70*(random.randint(1,5)-1)
+col_n = random.randint(1,5)-1
+index=75+70*col_n
 random.seed()
 next_num = pow(2,random.randint(1,9))
-
+n=0
 while Running:
     
     set_background()
@@ -141,14 +137,16 @@ while Running:
     
     #block moving
     create_block(index,moving,cur)
-    moving+=0.3
-    
-    if moving >582:
+    moving+=1
+    if moving >582-70*(len(blocks[col_n])):
         cur=next_num
         next_num = pow(2, random.randint(1,9))
         moving=226
         index=76+70*(random.randint(1,5)-1) 
-
+        blocks[col_n].append({cur: (76+70*(random.randint(1,5)-1), 582-70*(len(blocks[col_n])))})
+    for dic in blocks:
+        for a,b in dic.items():
+            create_block(a, b[0], b[1])
     #quit
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -160,7 +158,7 @@ while Running:
             next_num = pow(2, random.randint(1,9))
             moving=226
             index=76+70*(random.randint(1,5)-1)     
-
+ 
 
         
     #UPDATE
