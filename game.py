@@ -102,7 +102,9 @@ def draw_lc():
 random.seed()
 
 #array 
-blocks=[5]
+blocks=[]
+for i in range(6):
+    blocks.append([])
 #RUNNING
 Running=True
 cur=pow(2,random.randint(1,9))
@@ -138,15 +140,26 @@ while Running:
     #block moving
     create_block(index,moving,cur)
     moving+=1
-    if moving >582-70*(len(blocks[col_n])):
+    print(blocks)
+    try:
+        max_moving = 582-70*(len(blocks[col_n]))
+    except:
+        max_moving = 582
+    if moving >max_moving:
+        moving=226
+        index=76+70*col_n
+        l1 = []
+        l1.append(cur)
+        l1.append(76+70*col_n)
+        l1.append(max_moving)
+        blocks[col_n].append(l1)
+        col_n = random.randint(1,5)-1
         cur=next_num
         next_num = pow(2, random.randint(1,9))
-        moving=226
-        index=76+70*(random.randint(1,5)-1) 
-        blocks[col_n].append({cur: (76+70*(random.randint(1,5)-1), 582-70*(len(blocks[col_n])))})
-    for dic in blocks:
-        for a,b in dic.items():
-            create_block(a, b[0], b[1])
+    
+    for dica in blocks:
+        for dic in dica:
+            create_block(dic[1], dic[2], dic[0])
     #quit
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -154,10 +167,16 @@ while Running:
             quit()
         if event.type==pygame.MOUSEBUTTONDOWN:
             print(pygame.mouse.get_pos())
+            moving=226
+            index=76+70*col_n
+            l1 = []
+            l1.append(cur)
+            l1.append(76+70*col_n)
+            l1.append(max_moving)
+            blocks[col_n].append(l1)
+            col_n = random.randint(1,5)-1
             cur=next_num
             next_num = pow(2, random.randint(1,9))
-            moving=226
-            index=76+70*(random.randint(1,5)-1)     
  
 
         
