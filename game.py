@@ -126,7 +126,7 @@ def draw_lc():
     for i in range(5):
         pygame.draw.lines(screen, color,True, [(75+i*70,150),(75+i*70,650)], 5)
 
-###ß
+
 #RANDOM NUMBER
 #NEXT BLOCK NUMBER
 random.seed()
