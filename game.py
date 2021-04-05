@@ -5,11 +5,15 @@ import random
 import math
 from time import sleep
 import time
-
+  
 #initial set up
 pygame.init()
+moving = 0
+index=0
 score=0
 cur =0
+col_n = 0
+next_num = pow(2, random.randint(1,9))
 
 #time
 start_time=time.time()
@@ -39,7 +43,33 @@ col_list=[(255,0,0),(0,255,0),(204,153,255),
 (51,102,255),(255,204,164),
 (153,255,153),(194,194,214)]
 
-#def 
+#def
+def ini():
+    global index
+    global cur
+    global next_num
+    global col_n
+    global moving
+    moving =226
+    random.seed()
+    col_n = random.randint(1,5)-1
+    cur=next_num
+    next_num = pow(2,random.randint(1,9))
+    index=75+70*col_n
+    
+def blockAppend():
+    global index
+    global cur
+    global next_num
+    global col_n
+    global moving
+    l1 = []
+    l1.append(cur)
+    l1.append(index)
+    l1.append(max_moving)
+    blocks[col_n].append(l1)
+    ini()
+
 def createText(text,font_str, size, color, pos):
     font=pygame.font.Font(font_str,size)
     text1=font.render(text, True,color)
@@ -105,15 +135,12 @@ random.seed()
 blocks=[]
 for i in range(6):
     blocks.append([])
+
 #RUNNING
 Running=True
-cur=pow(2,random.randint(1,9))
-moving =226
-col_n = random.randint(1,5)
-index=75+70*col_n
-random.seed()
-next_num = pow(2,random.randint(1,9))
+ini()
 n=0
+
 while Running:
     
     set_background()
@@ -131,33 +158,24 @@ while Running:
     createText('II', 'arial.ttf',28,(255,255,255),(63,692))
     for i in range(5):
         createText('†', 'arial.ttf',47,(255,0,0),(98+i*70,161))
+
     #number set
     pygame.draw.rect(screen, col_list[int(getBaseLog(2,next_num))-1], (175,81,38,38), 0)
     createText(str(next_num),'arial.ttf',20,black,(168+25-len(str(next_num))*5,89))
         
     # print(next_num)
-    
     #block moving
     create_block(index,moving,cur)
     moving+=1
+
     # print(blocks)
     try:
         max_moving = 582-70*(len(blocks[col_n]))
     except:
         max_moving = 582
-    print(col_n)
+    
     if moving >max_moving:
-        moving=226
-        l1 = []
-        l1.append(cur)
-        l1.append(index)
-        l1.append(max_moving)
-        blocks[col_n].append(l1)
-        random.seed()
-        col_n = random.randint(1,5)-1
-        cur=next_num
-        next_num = pow(2, random.randint(1,9))
-        index=76+70*col_n
+        blockAppend()
     
     #quit
     for event in pygame.event.get():
@@ -166,20 +184,16 @@ while Running:
             quit()
         if event.type==pygame.MOUSEBUTTONDOWN:
             print(pygame.mouse.get_pos())
-            moving=226
-            l1 = []
-            l1.append(cur)
-            l1.append(index)
-            l1.append(max_moving)
-            blocks[col_n].append(l1)
-            random.seed()
-            col_n = random.randint(1,5)-1
-            cur=next_num
-            next_num = pow(2, random.randint(1,9))
-            index=76+70*col_n
- 
-
-        
+            print(index)
+            pos = pygame.mouse.get_pos()[0]
+            if pos in range(76,426):
+                col_n=int((pos-76)/70)
+                index = 76+70*col_n
+                try:
+                    max_moving = 582-70*(len(blocks[col_n]))
+                except:
+                    max_moving = 582
+            blockAppend()
     #UPDATE
     for dica in blocks:
         for dic in dica:
