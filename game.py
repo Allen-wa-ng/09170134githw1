@@ -13,6 +13,7 @@ index=0
 score=0
 cur =0
 col_n = 0
+blocks=[]
 next_num = pow(2, random.randint(1,9))
 
 #time
@@ -70,6 +71,14 @@ def blockAppend():
     blocks[col_n].append(l1)
     ini()
 
+def Text():
+    createText('Drop The Number!', 'arial.ttf',32, (255,255,80), (110,35))
+    createText('Next Block ►','arial.ttf',17,color,(57,88))
+    createText('Score:'+str(score),'arial.ttf',25,(255,0,100),(110,693))
+    createText('II', 'arial.ttf',28,(255,255,255),(63,692))
+    for i in range(5):
+        createText('†', 'arial.ttf',47,(255,0,0),(98+i*70,161))
+        
 def createText(text,font_str, size, color, pos):
     font=pygame.font.Font(font_str,size)
     text1=font.render(text, True,color)
@@ -132,7 +141,6 @@ def draw_lc():
 random.seed()
 
 # blocks array 
-blocks=[]
 for i in range(6):
     blocks.append([])
 
@@ -142,7 +150,7 @@ ini()
 n=0
 
 while Running:
-    
+    #Upload the screen everytime
     set_background()
     draw_lc()
 
@@ -152,12 +160,7 @@ while Running:
     createText('TIME:'+getTimeformat(dur),'arial.ttf',20,black,(315,91))
 
     #Text 
-    createText('Drop The Number!', 'arial.ttf',32, (255,255,80), (110,35))
-    createText('Next Block ►','arial.ttf',17,color,(57,88))
-    createText('Score:'+str(score),'arial.ttf',25,(255,0,100),(110,693))
-    createText('II', 'arial.ttf',28,(255,255,255),(63,692))
-    for i in range(5):
-        createText('†', 'arial.ttf',47,(255,0,0),(98+i*70,161))
+    Text()
 
     #number set
     pygame.draw.rect(screen, col_list[int(getBaseLog(2,next_num))-1], (175,81,38,38), 0)
