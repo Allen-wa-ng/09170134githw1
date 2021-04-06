@@ -23,6 +23,12 @@ start_time=time.time()
 colorName=(255,200,200)
 color=(255,255,255)
 black=(0,0,0)
+col_list=[(255,0,0),(0,255,0),(204,153,255),
+(209,237,0),(209,237,240),
+(209,40,240),(254,239,222),
+(0,239,222),(255,255,80),
+(51,102,255),(255,204,164),
+(153,255,153),(194,194,214)]
 
 #screen set up
 screen=pygame.display.set_mode((500,750))
@@ -35,14 +41,6 @@ background = pygame.transform.scale(background, (500, 750))
 pygame.display.set_caption('Pygame')
 icon=pygame.image.load('airplane.png')
 pygame.display.set_icon(icon)
-
-#color array
-col_list=[(255,0,0),(0,255,0),(204,153,255),
-(209,237,0),(209,237,240),
-(209,40,240),(254,239,222),
-(0,239,222),(255,255,80),
-(51,102,255),(255,204,164),
-(153,255,153),(194,194,214)]
 
 #def
 def ini():
@@ -78,7 +76,7 @@ def Text():
     createText('II', 'arial.ttf',28,(255,255,255),(63,692))
     for i in range(5):
         createText('†', 'arial.ttf',47,(255,0,0),(98+i*70,161))
-        
+
 def createText(text,font_str, size, color, pos):
     font=pygame.font.Font(font_str,size)
     text1=font.render(text, True,color)
