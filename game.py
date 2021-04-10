@@ -5,7 +5,7 @@ import random
 import math
 from time import sleep
 import time
-  
+
 #initial set up
 pygame.init()
 moving = 0
@@ -15,9 +15,7 @@ cur =0
 col_n = 0
 blocks=[]
 next_num = pow(2, random.randint(1,9))
-
-#time
-start_time=time.time()
+start_time=time.time()  #time
 
 #color set
 colorName=(255,200,200)
@@ -31,16 +29,12 @@ col_list=[(255,0,0),(0,255,0),(204,153,255),
 (153,255,153),(194,194,214)]
 
 #screen set up
-screen=pygame.display.set_mode((500,750))
-
-#screen background
-background = pygame.image.load('jaguar.jpg') 
-background = pygame.transform.scale(background, (500, 750))
-
-#caption & icon
-pygame.display.set_caption('Pygame')
-icon=pygame.image.load('airplane.png')
-pygame.display.set_icon(icon)
+screen=pygame.display.set_mode((500,750)) #display screen
+background = pygame.image.load('jaguar.jpg') #screen background
+background = pygame.transform.scale(background, (500, 750)) #screen background
+pygame.display.set_caption('Pygame') #caption
+icon=pygame.image.load('airplane.png') #icon
+pygame.display.set_icon(icon) #display icon
 
 #def
 def Merge():
@@ -95,7 +89,6 @@ def Merge():
                 except:
                     pass
             if y>5:
-                print('Game Over')
                 quit()
                 return False
                 
@@ -203,35 +196,29 @@ while Running:
     #Upload the screen everytime
     set_background()
     draw_lc()
-
     #Time 
-    end_time=time.time()
-    dur=end_time-start_time
-    createText('TIME:'+getTimeformat(dur),'arial.ttf',20,black,(315,91))
-
+    end_time = time.time() #End Time
+    dur = end_time-start_time
+    createText('TIME:'+getTimeformat(dur),'arial.ttf',20,black,(315,91)) #display clock
     #Text 
     Text()
-
     #number set
     pygame.draw.rect(screen, col_list[int(getBaseLog(2,next_num))-1], (175,81,38,38), 0)
     createText(str(next_num),'arial.ttf',20,black,(168+25-len(str(next_num))*5,89))
-        
-    # print(next_num)
     #block moving
     create_block(index,moving,cur)
     moving+=1
-
-    # print(blocks)
+    #print(blocks)
     try:
         max_moving = 582-70*(len(blocks[col_n]))
     except:
         max_moving = 582
-    
+    #block stack rule
     if moving >max_moving:
         blockAppend()
+    #Merge Rule 
     if Merge():
-        quit()
-    
+        pygame.draw.rect(screen, 'Game Over', (250,250,100,100), 0)     
     #quit
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -249,7 +236,6 @@ while Running:
                 except:
                     max_moving = 582
             blockAppend()
-                
     #UPDATE
     for dica in blocks:
         for dic in dica:
