@@ -43,6 +43,62 @@ icon=pygame.image.load('airplane.png')
 pygame.display.set_icon(icon)
 
 #def
+def Merge():
+    for x in range(len(blocks)):
+        for y  in range(len(blocks[x])):
+            if x >0:
+                try:
+                    if x <4:
+                        # if y<5:
+                        #     if blocks[x][y][0] == blocks[x-1][y][0] == blocks[x][y-1][0] == blocks[x+1][y][0]:
+                        #         blocks[x][y-1][0]*=4
+                        #         del blocks[x-1][y]
+                        #         del blocks[x][y]
+                        #         del blocks[x+1][y]
+                        # if blocks[x][y][0] == blocks[x-1][y][0] == blocks[x+1][y][0]:
+                        #     blocks[x][y][0]*=4
+                        #     del blocks[x-1][y]
+                        #     del blocks[x+1][y]
+                        # elif blocks[x][y][0] == blocks[x-1][y][0] == blocks[x][y-1][0]:
+                        #     blocks[x][y-1][0]*=4
+                        #     del blocks[x-1][y]
+                        #     del blocks[x][y]
+                        if blocks[x][y][0] == blocks[x-1][y][0]:
+                            blocks[x][y][0]*=2
+                            del blocks[x-1][y]
+                except:
+                    pass
+            elif x < 4:
+                try:
+                    if y>0:
+                        # if blocks[x][y][0] == blocks[x+1][y][0] == blocks[x][y-1][0]:
+                        #     blocks[x][y-1][0]*=4
+                        #     del blocks[x-1][y]
+                        #     del blocks[x][y]
+                        if blocks[x][y][0] == blocks[x+1][y][0]:  
+                            blocks[x][y][0]*=2
+                            del blocks[x+1][y]
+                except:
+                    pass
+            if y>1:
+                try:
+                    if blocks[x][y][0] == blocks[x][y-1][0]:
+                        blocks[x][y-1][0]*=2
+                        del blocks[x][y]
+                except:
+                    pass
+            elif y<5:
+                try:
+                    if blocks[x][y][0] == blocks[x][y+1][0]:
+                        blocks[x][y][0]*=2
+                        del blocks[x][y+1]
+                except:
+                    pass
+            if y>5:
+                print('Game Over')
+                quit()
+                return False
+                
 def ini():
     global index
     global cur
@@ -66,6 +122,7 @@ def blockAppend():
     l1.append(cur)
     l1.append(index)
     l1.append(max_moving)
+    
     blocks[col_n].append(l1)
     ini()
 
@@ -172,6 +229,8 @@ while Running:
     
     if moving >max_moving:
         blockAppend()
+    if Merge():
+        quit()
     
     #quit
     for event in pygame.event.get():
@@ -190,6 +249,7 @@ while Running:
                 except:
                     max_moving = 582
             blockAppend()
+                
     #UPDATE
     for dica in blocks:
         for dic in dica:
