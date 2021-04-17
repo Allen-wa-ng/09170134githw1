@@ -42,59 +42,41 @@ def Merge():
         if len(blocks[x])>5:
             return False
         for y  in range(len(blocks[x])):
-            #T shape
             try:
+                #T shape
                 if x>0 and x<4 and y>0 :
                     if blocks[x][y][0] == blocks[x-1][y][0] and  blocks[x][y][0] == blocks[x][y-1][0] and blocks[x][y][0] == blocks[x+1][y][0]:
                         blocks[x][y-1][0]*=4
                         del blocks[x-1][y]
                         del blocks[x][y]
                         del blocks[x+1][y]
-            except:
-                pass
-            #horizontal three shape
-            try:
+                #horizontal three shape
                 if x>0 and x<4:
                     if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x+1][y][0]:
                         blocks[x][y][0]*=4
                         del blocks[x-1][y]
                         del blocks[x+1][y]
-            except:
-                pass
-            #left and right 7 shape
-            try:
+                #left and right 7 shape
                 if x>0 and y>0:
                     if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
                         blocks[x][y-1][0]*=4
                         del blocks[x-1][y]
                         del blocks[x][y]
-            except:
-                pass
-            try:
                 if x<4 and y>0 :
                     if blocks[x][y][0] == blocks[x+1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
                         blocks[x][y-1][0]*=4
                         del blocks[x+1][y]
                         del blocks[x][y]
-            except:
-                pass
-            #L&R R&L
-            try:
+                #L&R R&L
                 if x>0 and x<len(blocks) :
                     if blocks[x][y][0] == blocks[x-1][y][0]:
                         blocks[x][y][0]*=2
                         del blocks[x-1][y]
-            except:
-                pass
-            try:
                 if x<4 and x<len(blocks) :
                     if blocks[x][y][0] == blocks[x+1][y][0]:  
                         blocks[x][y][0]*=2
                         del blocks[x+1][y]
-            except:
-                pass
-            #UP%DOWN
-            try:
+                #UP%DOWN
                 if y>0:
                     if blocks[x][y][0] == blocks[x][y-1][0]:
                         blocks[x][y-1][0]*=2
