@@ -63,7 +63,6 @@ def blockAppend():
     global col_n
     global moving
     global blocks
-    
     if max_moving <= 223:
         screen.fill(color)
         createText('Game Over', 'arial.ttf', 40, black, (145,150))
