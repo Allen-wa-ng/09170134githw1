@@ -16,9 +16,10 @@ col_n = 0
 blocks=[]
 next_num = pow(2, random.randint(1,9))
 start_time=time.time()  #time
-gg = False
+fail = False #The game piont
+
 #Background Music
-pygame.mixer.music.load('night.mp3')
+pygame.mixer.music.load('night_cover.mp3')
 pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play(-1)
 
@@ -42,8 +43,6 @@ icon=pygame.image.load('airplane.png') #icon
 pygame.display.set_icon(icon) #display icon
 
 #def
-
-
 def ini():
     global index
     global cur
@@ -168,43 +167,44 @@ while Running:
     #Text 
     Text()
     #number set
- 
     pygame.draw.rect(screen, col_list[int(getBaseLog(2,next_num))-1], (175,81,38,38), 0)
     createText(str(next_num),'arial.ttf',20,black,(168+25-len(str(next_num))*5,89))
     #block moving
     create_block(index,moving,cur)
     moving+=1
-    #print(blocks)
     try:
         max_moving = 582-70*(len(blocks[col_n]))
     except:
         max_moving = 582
-    #block stack rule
-    if moving >max_moving:
+    #blocks stack rule
+    if moving > max_moving:
         if not blockAppend():
             pygame.mixer.music.stop()
-            gg = True
+            fail = True
     #quit
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             pygame.quit()
             quit()
         if event.type==pygame.MOUSEBUTTONDOWN:
-            print(pygame.mouse.get_pos())
+            print(pygame.mouse.get_pos()) 
             print(index)
             pos = pygame.mouse.get_pos()[0]
-            #Restart
-            if pos in range(160,345) and gg:
-                if pygame.mouse.get_pos()[1] in range(250,290) and gg:
-                    gg = False
+            #Restart bottum
+            if pos in range(160,345) and fail:
+                if pygame.mouse.get_pos()[1] in range(250,290) and fail:
+                    fail = False
                     blocks = []
                     blocks.append([])
                     blocks.append([])
                     blocks.append([])
                     blocks.append([])
                     blocks.append([])
-                    pygame.mixer.music.play(-1)
-                    start_time=time.time()  #time
+                    pygame.mixer.music.play(-1) #music play
+                    start_time=time.time() #time 
+            #Quit buttom
+                elif pygame.mouse.get_pos()[1] in range(310,350):
+                    Running = False
             #Click the track
             if pos in range(76,426):
                 col_n=int((pos-76)/70)
@@ -218,6 +218,6 @@ while Running:
     #UPDATE
     for dica in blocks:
         for dic in dica:
-            if not gg:
+            if not fail:
                 create_block(dic[1], dic[2], dic[0])
     pygame.display.update()
