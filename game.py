@@ -16,6 +16,11 @@ col_n = 0
 blocks=[]
 next_num = pow(2, random.randint(1,9))
 start_time=time.time()  #time
+gg = False
+#Background Music
+pygame.mixer.music.load('night.mp3')
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(-1)
 
 #color set
 colorName=(255,200,200)
@@ -37,52 +42,8 @@ icon=pygame.image.load('airplane.png') #icon
 pygame.display.set_icon(icon) #display icon
 
 #def
-def Merge():
-    for x in range(len(blocks)):
-        if len(blocks[x])>5:
-            return False
-        for y  in range(len(blocks[x])):
-            try:
-                #T shape
-                if x>0 and x<4 and y>0 :
-                    if blocks[x][y][0] == blocks[x-1][y][0] and  blocks[x][y][0] == blocks[x][y-1][0] and blocks[x][y][0] == blocks[x+1][y][0]:
-                        blocks[x][y-1][0]*=4
-                        del blocks[x-1][y]
-                        del blocks[x][y]
-                        del blocks[x+1][y]
-                #horizontal three shape
-                if x>0 and x<4:
-                    if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x+1][y][0]:
-                        blocks[x][y][0]*=4
-                        del blocks[x-1][y]
-                        del blocks[x+1][y]
-                #left and right 7 shape
-                if x>0 and y>0:
-                    if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
-                        blocks[x][y-1][0]*=4
-                        del blocks[x-1][y]
-                        del blocks[x][y]
-                if x<4 and y>0 :
-                    if blocks[x][y][0] == blocks[x+1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
-                        blocks[x][y-1][0]*=4
-                        del blocks[x+1][y]
-                        del blocks[x][y]
-                #L&R R&L
-                if x>0 and x<len(blocks) :
-                    if blocks[x][y][0] == blocks[x-1][y][0]:
-                        blocks[x][y][0]*=2
-                        del blocks[x-1][y]
-                if x<4 and x<len(blocks) :
-                    if blocks[x][y][0] == blocks[x+1][y][0]:  
-                        blocks[x][y][0]*=2
-                        del blocks[x+1][y]
-                #UP%DOWN
-                if y>0:
-                    if blocks[x][y][0] == blocks[x][y-1][0]:
-                        blocks[x][y-1][0]*=2
-                    del blocks[x][y]
-            except:
-                pass
+
+
 def ini():
     global index
     global cur
@@ -102,13 +63,26 @@ def blockAppend():
     global next_num
     global col_n
     global moving
-    l1 = []
-    l1.append(cur)
-    l1.append(index)
-    l1.append(max_moving)
+    global blocks
     
-    blocks[col_n].append(l1)
-    ini()
+    if max_moving <= 223:
+        screen.fill(color)
+        createText('Game Over', 'arial.ttf', 40, black, (145,150))
+        pygame.draw.rect(screen, black, (160,250,185,40), 5)
+        createText('Restart','arial.ttf',25,black,(215,256))
+        pygame.draw.rect(screen, black, (160,310,185,40), 5)
+        createText('Quit','arial.ttf',25,black,(225,316))
+        pygame.display.update()
+        return False
+    else:
+        print(blocks)
+        l1 = []
+        l1.append(cur)
+        l1.append(index)
+        l1.append(max_moving)
+        blocks[col_n].append(l1)
+        ini()
+        return True
 
 def Text():
     createText('Drop The Number!', 'arial.ttf',32, (255,255,80), (110,35))
@@ -194,6 +168,7 @@ while Running:
     #Text 
     Text()
     #number set
+ 
     pygame.draw.rect(screen, col_list[int(getBaseLog(2,next_num))-1], (175,81,38,38), 0)
     createText(str(next_num),'arial.ttf',20,black,(168+25-len(str(next_num))*5,89))
     #block moving
@@ -206,10 +181,9 @@ while Running:
         max_moving = 582
     #block stack rule
     if moving >max_moving:
-        blockAppend()
-    #Merge Rule 
-    if Merge():
-        pygame.draw.rect(screen, 'Game Over', (250,250,100,100), 0)     
+        if not blockAppend():
+            pygame.mixer.music.stop()
+            gg = True
     #quit
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -219,6 +193,19 @@ while Running:
             print(pygame.mouse.get_pos())
             print(index)
             pos = pygame.mouse.get_pos()[0]
+            #Restart
+            if pos in range(160,345) and gg:
+                if pygame.mouse.get_pos()[1] in range(250,290) and gg:
+                    gg = False
+                    blocks = []
+                    blocks.append([])
+                    blocks.append([])
+                    blocks.append([])
+                    blocks.append([])
+                    blocks.append([])
+                    pygame.mixer.music.play(-1)
+                    start_time=time.time()  #time
+            #Click the track
             if pos in range(76,426):
                 col_n=int((pos-76)/70)
                 index = 76+70*col_n
@@ -227,8 +214,10 @@ while Running:
                 except:
                     max_moving = 582
             blockAppend()
+            
     #UPDATE
     for dica in blocks:
         for dic in dica:
-            create_block(dic[1], dic[2], dic[0])
+            if not gg:
+                create_block(dic[1], dic[2], dic[0])
     pygame.display.update()
