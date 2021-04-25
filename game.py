@@ -19,7 +19,7 @@ start_time=time.time()  #time
 fail = False #The game piont
 
 #Background Music
-pygame.mixer.music.load('night_cover.mp3')
+pygame.mixer.music.load('night_cover.mp3') #let it go.mp3 #mission.mp3
 pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play(-1)
 
@@ -213,7 +213,6 @@ while Running:
                 except:
                     max_moving = 582
             blockAppend()
-            
     #UPDATE
     for dica in blocks:
         for dic in dica:
