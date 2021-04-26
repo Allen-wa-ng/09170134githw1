@@ -215,7 +215,7 @@ while Running:
             blockAppend()
     #UPDATE
     for dica in blocks:
-        for dic in dica:
+        for dic in dica :
             if not fail:
                 create_block(dic[1], dic[2], dic[0])
     pygame.display.update()
