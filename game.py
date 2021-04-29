@@ -7,12 +7,12 @@ from time import sleep
 import time
 
 #Initialize
-pygame.init()
+pygame.init() 
 y_axis = 0
 x_axis = 0
-score = 0
-cur_number = 0
-track = 0
+score = 0 
+cur_number = 0 #current number
+track = 0 
 blocks = []
 next_num = pow(2, random.randint(1,9)) #next number
 start_time = time.time()  #time
@@ -39,50 +39,47 @@ background = pygame.transform.scale(background, (500, 750)) #screen background
 pygame.display.set_caption('2048 V.2') #caption
 
 #def
-#def Merge():
-#     #print('Damn') 
-#     for x in range(len(blocks)):
-#         if len(blocks[x])>5:
-#             return False
-#         for y  in range(len(blocks[x])):
+def Merge():
+    for x in range(len(blocks)):
+        for y in range(len(blocks[x])):
             #T shape
-            # if x>0 and x+1<len(blocks) and y>0 :
-            #     if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0] and blocks[x][y][0] == blocks[x+1][y][0]:
-            #         blocks[x][y-1][0]*=4
-            #         del blocks[x-1][y]
-            #         del blocks[x][y]
-            #         del blocks[x+1][y]
-            # horizontal three shape
-            # if x>0 and x+1<len(blocks):
-            #     if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x+1][y][0]:
-            #         blocks[x][y][0]*=4
-            #         del blocks[x-1][y]
-            #         del blocks[x+1][y]
-            # left and right 7 shape
-            # if x>0 and y>0:
-            #     if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
-            #         blocks[x][y-1][0]*=4
-            #         del blocks[x-1][y]
-            #         del blocks[x][y]
-            # if x+1<len(blocks) and y>0 :
-            #     if blocks[x][y][0] == blocks[x+1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
-            #         blocks[x][y-1][0]*=4
-            #         del blocks[x+1][y]
-            #         del blocks[x][y]
+            if x>0 and x+1<len(blocks) and y>0 :
+                if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0] and blocks[x][y][0] == blocks[x+1][y][0]:
+                    blocks[x][y-1][0]*=4
+                    del blocks[x-1][y]
+                    del blocks[x][y]
+                    del blocks[x+1][y]
+            #horizontal three shape
+            if x>0 and x+1<len(blocks):
+                if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x+1][y][0]:
+                    blocks[x][y][0]*=4
+                    del blocks[x-1][y]
+                    del blocks[x+1][y]
+            #left and right 7 shape
+            if x>0 and y>0:
+                if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
+                    blocks[x][y-1][0]*=4
+                    del blocks[x-1][y]
+                    del blocks[x][y]
+            if x+1<len(blocks) and y>0 :
+                if blocks[x][y][0] == blocks[x+1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
+                    blocks[x][y-1][0]*=4
+                    del blocks[x+1][y]
+                    del blocks[x][y]
             #L&R R&L
-            # if x>0 and x<len(blocks) :
-            #     if blocks[x][y][0] == blocks[x-1][y][0]:
-            #         blocks[x][y][0]*=2
-            #         del blocks[x-1][y]
-            # if x<4 and x<len(blocks) :
-            #     if blocks[x][y][0] == blocks[x+1][y][0]:  
-            #         blocks[x][y][0]*=2
-            #         del blocks[x+1][y]
-            # UP%DOWN
-            # if y>0:
-            #     if blocks[x][y][0] == blocks[x][y-1][0]:
-            #         blocks[x][y-1][0]*=2
-            #         del blocks[x][y]
+            if x>0 and x<len(blocks) :
+                if blocks[x][y][0] == blocks[x-1][y][0]:
+                    blocks[x][y][0]*=2
+                    del blocks[x-1][y]
+            if x<4 and x<len(blocks) :
+                if blocks[x][y][0] == blocks[x+1][y][0]:  
+                    blocks[x][y][0]*=2
+                    del blocks[x+1][y]
+            #UP%DOWN
+            if y>0:
+                if blocks[x][y][0] == blocks[x][y-1][0]:
+                    blocks[x][y-1][0]*=2
+                    del blocks[x][y]
 
 def initial():
     global x_axis
