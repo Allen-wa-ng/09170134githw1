@@ -39,48 +39,65 @@ background = pygame.transform.scale(background, (500, 750)) #screen background
 pygame.display.set_caption('2048 V.2') #caption
 
 #def
+
+# def update():
+#     for x in range(len(blocks)):
+#         for y in range(len(blocks[x])):
+#             blocks[x][y][2]= 582-70*(len(blocks[x])-1)
+#             create_block(blocks[x][y][2], blocks[x][y][1], blocks[x][y][0])
 def Merge():
+    # update()
     for x in range(len(blocks)):
         for y in range(len(blocks[x])):
-            #T shape
-            if x>0 and x+1<len(blocks) and y>0 :
-                if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0] and blocks[x][y][0] == blocks[x+1][y][0]:
-                    blocks[x][y-1][0]*=4
-                    del blocks[x-1][y]
-                    del blocks[x][y]
-                    del blocks[x+1][y]
-            #horizontal three shape
-            if x>0 and x+1<len(blocks):
-                if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x+1][y][0]:
-                    blocks[x][y][0]*=4
-                    del blocks[x-1][y]
-                    del blocks[x+1][y]
-            #left and right 7 shape
-            if x>0 and y>0:
-                if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
-                    blocks[x][y-1][0]*=4
-                    del blocks[x-1][y]
-                    del blocks[x][y]
-            if x+1<len(blocks) and y>0 :
-                if blocks[x][y][0] == blocks[x+1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
-                    blocks[x][y-1][0]*=4
-                    del blocks[x+1][y]
-                    del blocks[x][y]
+            try:
+                #T shape
+                if x>0 and x+1<len(blocks) and y>0 :
+                    if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0] and blocks[x][y][0] == blocks[x+1][y][0]:
+                        blocks[x][y-1][0] *= 4
+                        del blocks[x-1][y]
+                        del blocks[x][y]
+                        del blocks[x+1][y]
+                        continue
+                #horizontal three shape
+                if x>0 and x+1<len(blocks):
+                    if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x+1][y][0]:
+                        blocks[x][y][0] *= 4
+                        del blocks[x-1][y]
+                        del blocks[x+1][y]
+                        continue
+                #left and right 7 shape
+                if x>0 and y>0:
+                    if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
+                        blocks[x][y-1][0] *= 4
+                        del blocks[x-1][y]
+                        del blocks[x][y]
+                        continue
+                if x+1<len(blocks) and y>0 :
+                    if blocks[x][y][0] == blocks[x+1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
+                        blocks[x][y-1][0] *= 4
+                        del blocks[x+1][y]
+                        del blocks[x][y]
+                        continue
+            except IndexError:
+                pass
             #L&R R&L
-            if x>0 and x<len(blocks) :
-                if blocks[x][y][0] == blocks[x-1][y][0]:
-                    blocks[x][y][0]*=2
-                    del blocks[x-1][y]
-            if x<4 and x<len(blocks) :
-                if blocks[x][y][0] == blocks[x+1][y][0]:  
-                    blocks[x][y][0]*=2
-                    del blocks[x+1][y]
-            #UP%DOWN
+            if x>0 and x<len(blocks):
+                try:
+                    if blocks[x][y][0] == blocks[x-1][y][0]:  
+                        blocks[x][y][0]*=2
+                        del blocks[x-1][y]
+                        continue
+                except IndexError:
+                    pass
+                #UP%DOWN
             if y>0:
-                if blocks[x][y][0] == blocks[x][y-1][0]:
-                    blocks[x][y-1][0]*=2
-                    del blocks[x][y]
-
+                try:
+                    if blocks[x][y][0] == blocks[x][y-1][0]:
+                        blocks[x][y-1][0]*=2
+                        del blocks[x][y]
+                        continue
+                except IndexError:
+                    pass
 def initial():
     global x_axis
     global cur_number
@@ -180,11 +197,12 @@ def draw():
         pygame.draw.lines(screen, white, True, [(75+i*70,150),(75+i*70,650)], 5)
 
 # blocks append empty list [] 
-for i in range(6):
+for i in range(5):
     blocks.append([])
 
 #Run the game
-Running=True
+Running = True
+restarted = False
 initial()
 n=0
 while Running:
@@ -213,6 +231,7 @@ while Running:
         if not blockAppend():
             pygame.mixer.music.stop()
             fail = True
+    Merge()
     #quit
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -227,10 +246,11 @@ while Running:
                 if pos_y in range(250,290) and fail:
                     fail = False
                     blocks = []
-                    for i in range(1,6):
+                    for i in range(5):
                         blocks.append([])
                     pygame.mixer.music.play(-1) #music play
-                    start_time=time.time() #time 
+                    start_time = time.time() #time
+                    restarted = True 
             #Quit buttom
                 elif pos_y in range(310,350):
                     Running = False
@@ -242,7 +262,11 @@ while Running:
                     max_y_axis = 582-70*(len(blocks[track]))
                 except:
                     max_y_axis = 582
-            blockAppend()
+            #restart or restarted
+            if not restarted:
+                blockAppend()
+            if restarted:
+                restarted = False
     #UPDATE
     for dica in blocks:
         for dic in dica :
