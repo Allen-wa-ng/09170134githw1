@@ -19,7 +19,7 @@ start_time = time.time()  #time
 fail = False #The game piont
 
 #Background Music
-pygame.mixer.music.load('let it go.mp3') #let it go.mp3 #mission.mp3
+pygame.mixer.music.load('let it go.ogg') #let it go.mp3 #mission.mp3
 pygame.mixer.music.set_volume(0.5) #set volume
 pygame.mixer.music.play(-1) #-1 => infinite replace
 
@@ -57,6 +57,10 @@ def Merge():
                         del blocks[x-1][y]
                         del blocks[x][y]
                         del blocks[x+1][y]
+                        for i in range(y, 7):
+                            blocks[x-1][i][2] += 70
+                            blocks[x][i][2] += 70
+                            blocks[x+1][i][2] +=70
                         continue
                 #horizontal three shape
                 if x>0 and x+1<len(blocks):
@@ -64,6 +68,9 @@ def Merge():
                         blocks[x][y][0] *= 4
                         del blocks[x-1][y]
                         del blocks[x+1][y]
+                        for i in range(y, 7):
+                            blocks[x-1][i][2] += 70
+                            blocks[x+1][i][2] +=70
                         continue
                 #left and right 7 shape
                 if x>0 and y>0:
@@ -71,12 +78,18 @@ def Merge():
                         blocks[x][y-1][0] *= 4
                         del blocks[x-1][y]
                         del blocks[x][y]
+                        for i in range(y, 7):
+                            blocks[x-1][i][2] += 70
+                            blocks[x][i][2] +=70
                         continue
                 if x+1<len(blocks) and y>0 :
                     if blocks[x][y][0] == blocks[x+1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
                         blocks[x][y-1][0] *= 4
                         del blocks[x+1][y]
                         del blocks[x][y]
+                        for i in range(y, 7):
+                            blocks[x+1][i][2] += 70
+                            blocks[x][i][2] +=70
                         continue
             except IndexError:
                 pass
@@ -84,8 +97,11 @@ def Merge():
             if x>0 and x<len(blocks):
                 try:
                     if blocks[x][y][0] == blocks[x-1][y][0]:  
+                        print("y is", y)
                         blocks[x][y][0]*=2
                         del blocks[x-1][y]
+                        for i in range(y,7):
+                            blocks[x-1][i][2]+=70
                         continue
                 except IndexError:
                     pass
@@ -206,6 +222,7 @@ restarted = False
 initial()
 n=0
 while Running:
+    sleep(0.02)
     #Upload the screen everytime
     set_background()
     draw()
