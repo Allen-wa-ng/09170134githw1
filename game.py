@@ -235,18 +235,12 @@ while Running:
     draw()
     #Time
     end_time = time.time() #End Time
+    duration = (end_time - start_time)
+    tttt=(end_time-start_time)-pause_dur
     if not pause:
         pause_time=time.time()
-        duration = (end_time - start_time)
-        tttt = duration - pause_dur
     else:
-        if not checked:
-            pause_dur = time.time() - pause_time
-            checked = True
-        else:
-            pause_dur = (time.time()-pause_time)*2
-        paused=True
-    print(pause_dur)
+        pause_dur = time.time() - pause_time
     createText('TIME:'+getTimeformat(tttt),'arial.ttf',20,black,(315,91)) #display clock
     #Text 
     Text()
