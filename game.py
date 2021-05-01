@@ -15,7 +15,7 @@ cur_number = 0 #current number
 track = 0 
 blocks = []
 next_num = pow(2, random.randint(1,9)) #next number
-start_time = time.time()  #time
+start_time = time.time() #time
 fail = False #The game piont
 
 #Background Music
@@ -37,9 +37,7 @@ screen = pygame.display.set_mode((500,750)) #display screen
 background = pygame.image.load('jaguar.jpg') #screen background
 background = pygame.transform.scale(background, (500, 750)) #screen background
 pygame.display.set_caption('2048 V.2') #caption
-
 #def
-
 # def update():
 #     for x in range(len(blocks)):
 #         for y in range(len(blocks[x])):
@@ -114,6 +112,7 @@ def Merge():
                         continue
                 except IndexError:
                     pass
+
 def initial():
     global x_axis
     global cur_number
@@ -219,17 +218,36 @@ for i in range(5):
 #Run the game
 Running = True
 restarted = False
+pause = False
+paused = False
 initial()
 n=0
+end_time = 0
+duration = 0
+pause_time=time.time()
+pause_dur = 0
+tttt =0
+checked = False
 while Running:
     sleep(0.02)
     #Upload the screen everytime
     set_background()
     draw()
-    #Time 
+    #Time
     end_time = time.time() #End Time
-    duration = end_time - start_time
-    createText('TIME:'+getTimeformat(duration),'arial.ttf',20,black,(315,91)) #display clock
+    if not pause:
+        pause_time=time.time()
+        duration = (end_time - start_time)
+        tttt = duration - pause_dur
+    else:
+        if not checked:
+            pause_dur = time.time() - pause_time
+            checked = True
+        else:
+            pause_dur = (time.time()-pause_time)*2
+        paused=True
+    print(pause_dur)
+    createText('TIME:'+getTimeformat(tttt),'arial.ttf',20,black,(315,91)) #display clock
     #Text 
     Text()
     #number set
@@ -237,14 +255,18 @@ while Running:
     createText(str(next_num),'arial.ttf',20,black,(168+25-len(str(next_num))*5,89))
     #block moving
     create_block(x_axis,y_axis,cur_number)
-    y_axis += 1
-    try:
-        max_y_axis = 582-70*(len(blocks[track]))
-    except:
-        max_y_axis = 582
+    if not pause:
+        y_axis += 1
+        try:
+            max_y_axis = 582-70*(len(blocks[track]))
+        except:
+            max_y_axis = 582
+    if pause:
+        pygame.draw.rect(screen, colorName, (175,300,150,150), 0)
+        createText('II', 'arial.ttf', 100, black, (220,322))
     #Merge()
     #blocks stack rule
-    if y_axis > max_y_axis:
+    if y_axis > max_y_axis and not pause:
         if not blockAppend():
             pygame.mixer.music.stop()
             fail = True
@@ -258,7 +280,11 @@ while Running:
             print(pygame.mouse.get_pos())
             pos_x = pygame.mouse.get_pos()[0]
             pos_y = pygame.mouse.get_pos()[1]
-            #Restart buttom
+            #Pause button
+            if pos_x in range(50,95):
+                if pos_y in range(685,730):
+                    pause = not pause
+            #Restart button
             if pos_x in range(160,345) and fail:
                 if pos_y in range(250,290) and fail:
                     fail = False
@@ -268,20 +294,21 @@ while Running:
                     pygame.mixer.music.play(-1) #music play
                     start_time = time.time() #time
                     restarted = True 
-            #Quit buttom
+            #Quit button
                 elif pos_y in range(310,350):
                     Running = False
             #Click the track
-            if pos_x in range(76,426):
-                track = int((pos_x-76)/70)
-                x_axis = 76+70*track
-                try:
-                    max_y_axis = 582-70*(len(blocks[track]))
-                except:
-                    max_y_axis = 582
-            #restart or restarted
-            if not restarted:
-                blockAppend()
+            if pos_x in range(76,426) and not pause:
+                if pos_y in range(221,653):
+                    track = int((pos_x-76)/70)
+                    x_axis = 76+70*track
+                    try:
+                        max_y_axis = 582-70*(len(blocks[track]))
+                    except:
+                        max_y_axis = 582
+                    #restart or restarted
+                    if not restarted:
+                        blockAppend()
             if restarted:
                 restarted = False
     #UPDATE
