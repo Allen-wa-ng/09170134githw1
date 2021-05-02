@@ -95,7 +95,7 @@ def Merge():
             if x>0 and x<len(blocks):
                 try:
                     if blocks[x][y][0] == blocks[x-1][y][0]:  
-                        print("y is", y)
+                        # print("y is", y)
                         blocks[x][y][0]*=2
                         del blocks[x-1][y]
                         for i in range(y,7):
@@ -143,7 +143,7 @@ def blockAppend():
         pygame.display.update()
         return False
     else:
-        print(blocks)
+        # print(blocks)
         l1 = []
         l1.append(cur_number)
         l1.append(x_axis)
@@ -227,6 +227,8 @@ duration = 0
 pause_time=time.time()
 pause_dur = 0
 tttt =0
+paused = False
+totalPauseDur=0
 checked = False
 while Running:
     sleep(0.02)
@@ -235,13 +237,19 @@ while Running:
     draw()
     #Time
     end_time = time.time() #End Time
-    duration = (end_time - start_time)
-    tttt=(end_time-start_time)-pause_dur
+    duration = (end_time - start_time) - totalPauseDur
     if not pause:
-        pause_time=time.time()
-    else:
+        totalPauseDur += pause_dur
+        pause_dur = 0
+        paused = False
+    elif pause:
+        if not paused:
+            pause_time=time.time()
+            paused = True
         pause_dur = time.time() - pause_time
-    createText('TIME:'+getTimeformat(tttt),'arial.ttf',20,black,(315,91)) #display clock
+        duration = duration -pause_dur
+        print(pause_dur)
+    createText('TIME:'+getTimeformat(duration),'arial.ttf',20,black,(315,91)) #display clock
     #Text 
     Text()
     #number set
