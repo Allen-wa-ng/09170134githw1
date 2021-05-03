@@ -51,6 +51,7 @@ def Merge():
                 #T shape
                 if x>0 and x+1<len(blocks) and y>0 :
                     if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0] and blocks[x][y][0] == blocks[x+1][y][0]:
+                        print("T shape")
                         blocks[x][y-1][0] *= 4
                         del blocks[x-1][y]
                         del blocks[x][y]
@@ -63,6 +64,7 @@ def Merge():
                 #horizontal three shape
                 if x>0 and x+1<len(blocks):
                     if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x+1][y][0]:
+                        print("horizontal three shape")
                         blocks[x][y][0] *= 4
                         del blocks[x-1][y]
                         del blocks[x+1][y]
@@ -73,6 +75,7 @@ def Merge():
                 #left and right 7 shape
                 if x>0 and y>0:
                     if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
+                        print("left 7 shape")
                         blocks[x][y-1][0] *= 4
                         del blocks[x-1][y]
                         del blocks[x][y]
@@ -82,6 +85,7 @@ def Merge():
                         continue
                 if x+1<len(blocks) and y>0 :
                     if blocks[x][y][0] == blocks[x+1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
+                        print("gamma shape")
                         blocks[x][y-1][0] *= 4
                         del blocks[x+1][y]
                         del blocks[x][y]
@@ -95,6 +99,7 @@ def Merge():
             if x>0 and x<len(blocks):
                 try:
                     if blocks[x][y][0] == blocks[x-1][y][0]:  
+                        print("right and left")
                         # print("y is", y)
                         blocks[x][y][0]*=2
                         del blocks[x-1][y]
@@ -107,6 +112,7 @@ def Merge():
             if y>0:
                 try:
                     if blocks[x][y][0] == blocks[x][y-1][0]:
+                        print("up and down")
                         blocks[x][y-1][0]*=2
                         del blocks[x][y]
                         continue
@@ -248,7 +254,6 @@ while Running:
             paused = True
         pause_dur = time.time() - pause_time
         duration = duration -pause_dur
-        print(pause_dur)
     createText('TIME:'+getTimeformat(duration),'arial.ttf',20,black,(315,91)) #display clock
     #Text 
     Text()
@@ -279,7 +284,7 @@ while Running:
             pygame.quit()
             quit()
         if event.type==pygame.MOUSEBUTTONDOWN:
-            print(pygame.mouse.get_pos())
+            # print(pygame.mouse.get_pos())
             pos_x = pygame.mouse.get_pos()[0]
             pos_y = pygame.mouse.get_pos()[1]
             #Pause button
