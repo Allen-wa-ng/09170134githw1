@@ -130,6 +130,9 @@ def Merge():
                         print("up and down")
                         blocks[x][y-1][0]*=2
                         del blocks[x][y]
+                        for i in range(y,len(blocks[x])):
+                            print("dropped")
+                            blocks[x][i][2] +=70
                         continue
                 except IndexError:
                     pass
