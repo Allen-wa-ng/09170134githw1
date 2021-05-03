@@ -315,6 +315,8 @@ while Running:
                         blocks.append([])
                     pygame.mixer.music.play(-1) #music play
                     start_time = time.time() #time
+                    end_time = time.time()
+                    pause_dur = 0
                     restarted = True 
             #Quit button
                 elif pos_y in range(310,350):
