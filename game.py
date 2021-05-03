@@ -56,9 +56,14 @@ def Merge():
                         del blocks[x-1][y]
                         del blocks[x][y]
                         del blocks[x+1][y]
-                        for i in range(y, 7):
+                        for i in range(y, len(blocks[x-1])):
+                            print("dropped!")
                             blocks[x-1][i][2] += 70
+                        for i in range(y,len(blocks[x])):
+                            print("dropped!")
                             blocks[x][i][2] += 70
+                        for i in range(y, len(blocks[x+1])):
+                            print("dropped!")
                             blocks[x+1][i][2] +=70
                         continue
                 #horizontal three shape
@@ -68,8 +73,11 @@ def Merge():
                         blocks[x][y][0] *= 4
                         del blocks[x-1][y]
                         del blocks[x+1][y]
-                        for i in range(y, 7):
+                        for i in range(y, len(blocks[x-1])):
+                            print("dropped!")
                             blocks[x-1][i][2] += 70
+                        for i in range(y, len(blocks[x+1])):
+                            print("dropped!")
                             blocks[x+1][i][2] +=70
                         continue
                 #left and right 7 shape
@@ -79,8 +87,11 @@ def Merge():
                         blocks[x][y-1][0] *= 4
                         del blocks[x-1][y]
                         del blocks[x][y]
-                        for i in range(y, 7):
+                        for i in range(y, len(blocks[x-1])):
+                            print("dropped")
                             blocks[x-1][i][2] += 70
+                        for i in range(y,len(blocks[x])):
+                            print("dropped!")
                             blocks[x][i][2] +=70
                         continue
                 if x+1<len(blocks) and y>0 :
@@ -89,8 +100,11 @@ def Merge():
                         blocks[x][y-1][0] *= 4
                         del blocks[x+1][y]
                         del blocks[x][y]
-                        for i in range(y, 7):
+                        for i in range(y, len(blocks[x+1])):
+                            print("dropped!")
                             blocks[x+1][i][2] += 70
+                        for i in range(y,len(blocks[x])):
+                            print("dropped!")
                             blocks[x][i][2] +=70
                         continue
             except IndexError:
@@ -103,7 +117,8 @@ def Merge():
                         # print("y is", y)
                         blocks[x][y][0]*=2
                         del blocks[x-1][y]
-                        for i in range(y,7):
+                        for i in range(y,len(blocks[x-1])):
+                            print("dropped!")
                             blocks[x-1][i][2]+=70
                         continue
                 except IndexError:
