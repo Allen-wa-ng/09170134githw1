@@ -44,7 +44,6 @@ pygame.display.set_caption('2048 V.2') #caption
 #             blocks[x][y][2]= 582-70*(len(blocks[x])-1)
 #             create_block(blocks[x][y][2], blocks[x][y][1], blocks[x][y][0])
 def Merge():
-    # update()
     for x in range(len(blocks)):
         for y in range(len(blocks[x])):
             try:
@@ -65,7 +64,12 @@ def Merge():
                         for i in range(y, len(blocks[x+1])):
                             print("dropped!")
                             blocks[x+1][i][2] +=70
-                        continue
+                        continue 
+            except IndexError:
+                pass
+    for x in range(len(blocks)):
+        for y in range(len(blocks[x])):
+            try:
                 #horizontal three shape
                 if x>0 and x+1<len(blocks):
                     if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x+1][y][0]:
@@ -79,7 +83,7 @@ def Merge():
                         for i in range(y, len(blocks[x+1])):
                             print("dropped!")
                             blocks[x+1][i][2] +=70
-                        continue
+                        continue 
                 #left and right 7 shape
                 if x>0 and y>0:
                     if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
@@ -109,6 +113,9 @@ def Merge():
                         continue
             except IndexError:
                 pass
+    # update()
+    for x in range(len(blocks)):
+        for y in range(len(blocks[x])):
             #L&R R&L
             if x>0 and x<len(blocks):
                 try:
