@@ -37,12 +37,8 @@ screen = pygame.display.set_mode((500,750)) #display screen
 background = pygame.image.load('jaguar.jpg') #screen background
 background = pygame.transform.scale(background, (500, 750)) #screen background
 pygame.display.set_caption('2048 V.2') #caption
+
 #def
-# def update():
-#     for x in range(len(blocks)):
-#         for y in range(len(blocks[x])):
-#             blocks[x][y][2]= 582-70*(len(blocks[x])-1)
-#             create_block(blocks[x][y][2], blocks[x][y][1], blocks[x][y][0])
 def Merge():
     for x in range(len(blocks)):
         for y in range(len(blocks[x])):
@@ -113,7 +109,6 @@ def Merge():
                         continue
             except IndexError:
                 pass
-    # update()
     for x in range(len(blocks)):
         for y in range(len(blocks[x])):
             #L&R R&L
