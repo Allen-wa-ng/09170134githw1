@@ -14,7 +14,7 @@ score = 0
 cur_number = 0 #current number
 track = 0 
 blocks = []
-next_num = pow(2, random.randint(1,9)) #next number
+next_num = pow(2, random.randint(1,5)) #next number
 start_time = time.time() #time
 fail = False #The game piont
 
@@ -39,9 +39,10 @@ background = pygame.transform.scale(background, (500, 750)) #screen background
 pygame.display.set_caption('2048 V.2') #caption
 
 #def
-def Merge():
-    for x in range(len(blocks)):
-        for y in range(len(blocks[x])):
+def Merge(r,l):
+    global score
+    for x in range(r,len(blocks)):
+        for y in range(l,len(blocks[x])):
             try:
                 #T shape
                 if x>0 and x+1<len(blocks) and y>0 :
@@ -60,11 +61,12 @@ def Merge():
                         for i in range(y, len(blocks[x+1])):
                             print("dropped!")
                             blocks[x+1][i][2] +=70
+                        score += blocks[x][y-1][0]
                         continue 
             except IndexError:
                 pass
-    for x in range(len(blocks)):
-        for y in range(len(blocks[x])):
+    for x in range(r,len(blocks)):
+        for y in range(l,len(blocks[x])):
             try:
                 #horizontal three shape
                 if x>0 and x+1<len(blocks):
@@ -79,6 +81,7 @@ def Merge():
                         for i in range(y, len(blocks[x+1])):
                             print("dropped!")
                             blocks[x+1][i][2] +=70
+                        score += blocks[x][y][0]
                         continue 
                 #left and right 7 shape
                 if x>0 and y>0:
@@ -93,6 +96,7 @@ def Merge():
                         for i in range(y,len(blocks[x])):
                             print("dropped!")
                             blocks[x][i][2] +=70
+                        score += blocks[x][y-1][0]
                         continue
                 if x+1<len(blocks) and y>0 :
                     if blocks[x][y][0] == blocks[x+1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
@@ -106,26 +110,27 @@ def Merge():
                         for i in range(y,len(blocks[x])):
                             print("dropped!")
                             blocks[x][i][2] +=70
+                        score += blocks[x][y-1][0]
                         continue
             except IndexError:
                 pass
-    for x in range(len(blocks)):
-        for y in range(len(blocks[x])):
+    for x in range(r,len(blocks)):
+        for y in range(l,len(blocks[x])):
             #L&R R&L
             if x>0 and x<len(blocks):
                 try:
                     if blocks[x][y][0] == blocks[x-1][y][0]:  
                         print("right and left")
-                        # print("y is", y)
                         blocks[x][y][0]*=2
                         del blocks[x-1][y]
                         for i in range(y,len(blocks[x-1])):
                             print("dropped!")
                             blocks[x-1][i][2]+=70
+                        score += blocks[x][y-1][0]
                         continue
                 except IndexError:
                     pass
-                #UP%DOWN
+            #UP%DOWN
             if y>0:
                 try:
                     if blocks[x][y][0] == blocks[x][y-1][0]:
@@ -135,6 +140,7 @@ def Merge():
                         for i in range(y,len(blocks[x])):
                             print("dropped")
                             blocks[x][i][2] +=70
+                        score += blocks[x][y-1][0]
                         continue
                 except IndexError:
                     pass
@@ -149,7 +155,12 @@ def initial():
     random.seed()
     track = random.randint(1,5)-1 #number of track 0~4 
     cur_number = next_num
-    next_num = pow(2,random.randint(1,5))
+    if score >6000:
+        next_num = pow(2, random.randint(1,10))
+    elif score > 200:
+        next_num = pow(2, random.randint(1,8))
+    else:
+        next_num = pow(2,random.randint(1,5))
     x_axis=75+70*track
     
 def blockAppend():
@@ -159,13 +170,16 @@ def blockAppend():
     global track
     global y_axis
     global blocks
+    global score
     if max_y_axis <= 223:
         screen.fill(white)
         createText('Game Over', 'arial.ttf', 40, black, (145,150))
-        pygame.draw.rect(screen, black, (160,250,185,40), 5)
-        createText('Restart','arial.ttf',25,black,(215,256))
-        pygame.draw.rect(screen, black, (160,310,185,40), 5)
-        createText('Quit','arial.ttf',25,black,(225,316))
+        createText("Score:" ,'arial.ttf',30,black,(155,236))
+        createText(str(score),'arial.ttf',35,black,(255,235))
+        pygame.draw.rect(screen, black, (160,320,185,40), 5)
+        createText('Restart','arial.ttf',25,black,(215,326))
+        pygame.draw.rect(screen, black, (160,380,185,40), 5)
+        createText('Quit','arial.ttf',25,black,(225,386))
         pygame.display.update()
         return False
     else:
@@ -181,7 +195,7 @@ def blockAppend():
 def Text():
     createText('Drop The Number!', 'arial.ttf',32, (255,255,80), (110,35))
     createText('Next Block ►','arial.ttf',17,white,(57,88))
-    createText('Score:'+str(score),'arial.ttf',25,(255,0,100),(110,693))
+    createText('Score:'+str(score),'arial.ttf',25,black,(110,693))
     createText('II', 'arial.ttf',28,(255,255,255),(63,692))
     for i in range(5):
         createText('†', 'arial.ttf',47,(255,0,0),(98+i*70,161))
@@ -233,7 +247,7 @@ def draw():
     pygame.draw.rect(screen, white, (50,685,45,45), 5)
     pygame.draw.rect(screen, white, (350,685,45,45), 5)
     pygame.draw.rect(screen, white, (405,685,45,45), 5)
-    pygame.draw.rect(screen, white, (105,685,235,45), 5)
+    pygame.draw.rect(screen, white, (105,685,235,45), 0)
     for i in range(5):
         pygame.draw.lines(screen, white, True, [(75+i*70,150),(75+i*70,650)], 5)
 
@@ -297,7 +311,7 @@ while Running:
         if not blockAppend():
             pygame.mixer.music.stop()
             fail = True
-    Merge()
+    Merge(0,0)
     #quit
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -313,7 +327,7 @@ while Running:
                     pause = not pause
             #Restart button
             if pos_x in range(160,345) and fail:
-                if pos_y in range(250,290) and fail:
+                if pos_y in range(320,360) and fail:
                     fail = False
                     blocks = []
                     for i in range(5):
@@ -322,9 +336,10 @@ while Running:
                     start_time = time.time() #time
                     end_time = time.time()
                     pause_dur = 0
+                    score = 0
                     restarted = True 
             #Quit button
-                elif pos_y in range(310,350):
+                elif pos_y in range(380,420):
                     Running = False
             #Click the track
             if pos_x in range(76,426) and not pause:
