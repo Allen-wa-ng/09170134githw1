@@ -39,7 +39,50 @@ background = pygame.transform.scale(background, (500, 750)) #screen background
 pygame.display.set_caption('2048 V.2') #caption
 
 #def
-def Merge(r,l):
+def Merge(x,y):
+    global score
+    print(x," ",y)
+    #print("value ",blocks[x][y][0])
+    if x > 0 and x < 5:
+        try:
+            # On the right
+            if x+1<5:
+                if blocks[x][y][0] == blocks[x+1][y][0]:  
+                    print("right and left")
+                    blocks[x][y][0]*=2
+                    del blocks[x+1][y]
+                    for i in range(y,len(blocks[x+1])):
+                        print("dropped!")
+                        blocks[x-1][i][2]+=70
+                    score += blocks[x][y][0]
+                    Merge(x,y)
+        except IndexError:
+            pass
+        try:
+            # On the right
+            if blocks[x][y][0] == blocks[x-1][y][0]:  
+                print("right and left")
+                blocks[x][y][0]*=2
+                del blocks[x-1][y]
+                for i in range(y,len(blocks[x-1])):
+                    print("dropped!")
+                    blocks[x-1][i][2]+=70
+                score += blocks[x][y][0]
+                Merge(x,y)
+            
+        except IndexError:
+            pass
+    if y > 0:
+        if blocks[x][y][0] == blocks[x][y-1][0]:
+            print("up and down")
+            blocks[x][y-1][0]*=2
+            del blocks[x][y]
+            for i in range(y,len(blocks[x])):
+                print("dropped")
+                blocks[x][i][2] +=70
+            score += blocks[x][y-1][0]
+            Merge(x,y-1)
+def MergeOld(r,l):
     global score
     for x in range(len(blocks)):
         for y in range(len(blocks[x])):
@@ -83,12 +126,21 @@ def Merge(r,l):
                             blocks[x+1][i][2] +=70
                         score += blocks[x][y][0]
                         continue 
-            except IndexError:
-                print("horizontal three shape error")
-                pass
-            
-            # gamma shape
-            try:
+                #left and right 7 shape
+                if x>0 and y>0:
+                    if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
+                        print("left 7 shape")
+                        blocks[x][y-1][0] *= 4
+                        del blocks[x-1][y]
+                        del blocks[x][y]
+                        for i in range(y, len(blocks[x-1])):
+                            print("dropped")
+                            blocks[x-1][i][2] += 70
+                        for i in range(y,len(blocks[x])):
+                            print("dropped!")
+                            blocks[x][i][2] +=70
+                        score += blocks[x][y-1][0]
+                        continue
                 if x+1<len(blocks) and y>0 :
                     if blocks[x][y][0] == blocks[x+1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
                         print("gamma shape")
@@ -104,27 +156,6 @@ def Merge(r,l):
                         score += blocks[x][y-1][0]
                         continue
             except IndexError:
-                print("gamma shape error")
-                pass
-            
-            # left 7 shape
-            try:
-                if x>0 and y>0:
-                    if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
-                        print("left 7 shape")
-                        blocks[x][y-1][0] *= 4
-                        del blocks[x-1][y]
-                        del blocks[x][y]
-                        for i in range(y, len(blocks[x-1])):
-                            print("dropped")
-                            blocks[x-1][i][2] += 70
-                        for i in range(y,len(blocks[x])):
-                            print("dropped!")
-                            blocks[x][i][2] +=70
-                        score += blocks[x][y-1][0]
-                        continue
-            except IndexError:
-                print("left 7 shape error")
                 pass
     for x in range(len(blocks)):
         for y in range(len(blocks[x])):
@@ -201,6 +232,7 @@ def blockAppend():
         l1.append(x_axis)
         l1.append(max_y_axis)
         blocks[track].append(l1)
+        Merge(track, len(blocks[track])-1)
         initial()
         return True
 
@@ -323,7 +355,6 @@ while Running:
         if not blockAppend():
             pygame.mixer.music.stop()
             fail = True
-    Merge(x_axis,y_axis)
     #quit
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
