@@ -41,8 +41,8 @@ pygame.display.set_caption('2048 V.2') #caption
 #def
 def Merge(r,l):
     global score
-    for x in range(r,len(blocks)):
-        for y in range(l,len(blocks[x])):
+    for x in range(len(blocks)):
+        for y in range(len(blocks[x])):
             try:
                 #T shape
                 if x>0 and x+1<len(blocks) and y>0 :
@@ -65,8 +65,8 @@ def Merge(r,l):
                         continue 
             except IndexError:
                 pass
-    for x in range(r,len(blocks)):
-        for y in range(l,len(blocks[x])):
+    for x in range(len(blocks)):
+        for y in range(len(blocks[x])):
             try:
                 #horizontal three shape
                 if x>0 and x+1<len(blocks):
@@ -114,8 +114,8 @@ def Merge(r,l):
                         continue
             except IndexError:
                 pass
-    for x in range(r,len(blocks)):
-        for y in range(l,len(blocks[x])):
+    for x in range(len(blocks)):
+        for y in range(len(blocks[x])):
             #L&R R&L
             if x>0 and x<len(blocks):
                 try:
@@ -155,9 +155,9 @@ def initial():
     random.seed()
     track = random.randint(1,5)-1 #number of track 0~4 
     cur_number = next_num
-    if score >6000:
+    if score > 6000:
         next_num = pow(2, random.randint(1,10))
-    elif score > 200:
+    elif score > 2000:
         next_num = pow(2, random.randint(1,8))
     else:
         next_num = pow(2,random.randint(1,5))
@@ -311,7 +311,7 @@ while Running:
         if not blockAppend():
             pygame.mixer.music.stop()
             fail = True
-    Merge(0,0)
+    Merge(x_axis,y_axis)
     #quit
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
