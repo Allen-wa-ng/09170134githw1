@@ -58,18 +58,21 @@ def Merge(x, y):
             blocks[x][y] = 0
             blocks[x+1][y] = 0
             for i in range(y, 6):
-                if blocks[x-1][y]:
+                if blocks[x-1][i]:
                     print("dropped!")
                     blocks[x-1][i][2] += 70
             for i in range(y, 6):
-                if blocks[x][y]!=0:
+                if blocks[x][i]!=0:
                     print("dropped!")
                     blocks[x][i][2] += 70
             for i in range(y, 6):
-                if blocks[x][y-1] != 0:
+                if blocks[x+1][i] != 0:
                     print("dropped!")
-                    blocks[x][i][2] += 70
+                    blocks[x+1][i][2] += 70
             score += blocks[x][y-1][0]
+            index_y[x-1]-=1
+            index_y[x] -=1
+            index_y[x+1]-=1
             Merge(x,y)
     # On the right
     if x+1 < 5:
