@@ -49,23 +49,45 @@ def Merge(x, y):
     global score
     # print(x," ",y)
     # print("value ",blocks[x][y][0])
+    # T shape
+    if x > 0 and x+1 < 5 and y > 0:
+        if blocks[x][y] != 0 and blocks[x-1][y]!=0 and blocks[x][y-1] !=0 and blocks[x+1][y] != 0 and blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0] and blocks[x][y][0] == blocks[x+1][y][0]:
+            print("T shape")
+            blocks[x][y-1][0] *= 4
+            blocks[x-1][y] = 0
+            blocks[x][y] = 0
+            blocks[x+1][y] = 0
+            for i in range(y, 6):
+                if blocks[x-1][y]:
+                    print("dropped!")
+                    blocks[x-1][i][2] += 70
+            for i in range(y, 6):
+                if blocks[x][y]!=0:
+                    print("dropped!")
+                    blocks[x][i][2] += 70
+            for i in range(y, 6):
+                if blocks[x][y-1] != 0:
+                    print("dropped!")
+                    blocks[x][i][2] += 70
+            score += blocks[x][y-1][0]
+            Merge(x,y)
+    # On the right
+    if x+1 < 5:
+        if blocks[x][y]!=0 and blocks[x+1][y] != 0 and blocks[x][y][0] == blocks[x+1][y][0]:
+            print("right")
+            blocks[x][y][0] *= 2
+            blocks[x+1][y] = 0
+            for i in range(y, 6):
+                if blocks[x+1][i] != 0:
+                    print("dropped!")
+                    blocks[x+1][i][2] += 70
+            score += blocks[x][y][0]
+            index_y[x+1] -= 1
+            Merge(x, y)
     if x > 0 and x < 5:
-        # On the right
-        if x+1 < 5:
-            if blocks[x][y]!=0 and blocks[x+1][y] != 0 and blocks[x][y][0] == blocks[x+1][y][0]:
-                print("right and left")
-                blocks[x][y][0] *= 2
-                blocks[x+1][y] = 0
-                for i in range(y, 6):
-                    if blocks[x+1][i] != 0:
-                        print("dropped!")
-                        blocks[x+1][i][2] += 70
-                score += blocks[x][y][0]
-                index_y[x+1] -= 1
-                Merge(x, y)
         # On the left
         if blocks[x][y]!=0 and blocks[x-1][y] != 0 and blocks[x][y][0] == blocks[x-1][y][0]:
-            print("right and left")
+            print("left")
             blocks[x][y][0] *= 2
             blocks[x-1][y] = 0
             for i in range(y, 6):
@@ -404,6 +426,7 @@ while Running:
                     for i in range(5):
                         blocks.append([0, 0, 0, 0, 0, 0])
                     pygame.mixer.music.play(-1)  # music play
+                    index_y = [0,0,0,0,0,0]
                     start_time = time.time()  # time
                     end_time = time.time()
                     pause_dur = 0
