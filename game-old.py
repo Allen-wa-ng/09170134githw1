@@ -49,7 +49,15 @@ def Merge(x, y):
     global score
     # print("Position: ",x," ",y)
     # print("Value: ",blocks[x][y][0])
-    print(index_y)
+    for a in range(5):
+        str1=""
+        for b in range(6):
+            if blocks[a][b] != 0:
+                str1 += str(blocks[a][b][0]) + " "
+            else:
+                str1 += str(0)
+        print(str1)
+    print("END")
     # T shape
     if x > 0 and x+1 < 5 and y > 0:
         if blocks[x][y] != 0 and blocks[x-1][y] != 0 and blocks[x][y-1] != 0 and blocks[x+1][y] != 0 and blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0] and blocks[x][y][0] == blocks[x+1][y][0]:
