@@ -47,8 +47,9 @@ pygame.display.set_caption('2048 V.2')  # caption
 def Merge(x, y):
     global index_y
     global score
-    print("Position: ",x," ",y)
-    print("Value: ",blocks[x][y][0])
+    # print("Position: ",x," ",y)
+    # print("Value: ",blocks[x][y][0])
+    print(index_y)
     # T shape
     if x > 0 and x+1 < 5 and y > 0:
         if blocks[x][y] != 0 and blocks[x-1][y] != 0 and blocks[x][y-1] != 0 and blocks[x+1][y] != 0 and blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0] and blocks[x][y][0] == blocks[x+1][y][0]:
@@ -58,7 +59,7 @@ def Merge(x, y):
             blocks[x][y] = 0
             blocks[x+1][y] = 0
             for i in range(y, 6):
-                if blocks[x-1][i]:
+                if blocks[x-1][i] != 0:
                     print("dropped!")
                     blocks[x-1][i][2] += 70
             for i in range(y, 6):
