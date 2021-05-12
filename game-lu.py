@@ -103,6 +103,7 @@ def merge(x, y):
                 dropAboveBlocks(x-1,y)
                 dropAboveBlocks(x+1,y)
                 merge(x,y)
+                merge(x,y-1)
                 merge(x-1, y)
                 merge(x+1, y)
                 return
@@ -117,6 +118,7 @@ def merge(x, y):
                 dropAboveBlocks(x,y)
                 dropAboveBlocks(x+1, y)
                 merge(x,y)
+                merge(x,y-1)
                 merge(x+1,y)
                 return
     # Check left and down
@@ -129,6 +131,7 @@ def merge(x, y):
                 dropAboveBlocks(x,y)
                 dropAboveBlocks(x-1, y)
                 merge(x,y)
+                merge(x,y-1)
                 merge(x-1,y)
                 return
     # Check left and right
