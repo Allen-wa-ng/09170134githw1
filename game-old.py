@@ -74,6 +74,63 @@ def Merge(x, y):
             index_y[x] -=1
             index_y[x+1]-=1
             Merge(x,y)
+    # horizontal three shape
+    if x > 0 and x+1 < 5:
+        if blocks[x][y] != 0 and blocks[x-1][y]!=0 and blocks[x+1][y]!= 0 and blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x+1][y][0]:
+            print("horizontal three shape")
+            blocks[x][y][0] *= 4
+            blocks[x-1][y] = 0
+            blocks[x+1][y] = 0
+            for i in range(y, 6):
+                if blocks[x-1][i] != 0:
+                    print("dropped!")
+                    blocks[x-1][i][2] += 70
+            for i in range(y, 6):
+                if blocks[x+1][i] != 0:
+                    print("dropped!")
+                    blocks[x+1][i][2] += 70
+            score += blocks[x][y][0]
+            Merge(x,y)
+            
+    # left and right 7 shape
+    if x > 0 and y > 0:
+        if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
+            print("left 7 shape")
+            blocks[x][y-1][0] *= 4
+            blocks[x-1][y] = 0
+            blocks[x][y] = 0
+            for i in range(y, 6):
+                if blocks[x-1][i] != 0:
+                    print("dropped")
+                    blocks[x-1][i][2] += 70
+            for i in range(y, 6):
+                if blocks[x][i] != 0:
+                    print("dropped!")
+                    blocks[x][i][2] += 70
+            index_y[x-1]-=1
+            index_y[x] -=1
+            score += blocks[x][y-1][0]
+            Merge(x,y-1)
+            
+    if x+1 < len(blocks) and y > 0:
+        if blocks[x][y][0] == blocks[x+1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
+            print("gamma shape")
+            blocks[x][y-1][0] *= 4
+            blocks[x+1][y] = 0
+            blocks[x][y] = 0
+            for i in range(y, 6):
+                if blocks[x+1][i] != 0:
+                    print("dropped!")
+                    blocks[x+1][i][2] += 70
+            for i in range(y, 6):
+                if blocks[x][i] != 0:
+                    print("dropped!")
+                    blocks[x][i][2] += 70
+            score += blocks[x][y-1][0]
+            index_y[x+1]-=1
+            index_y[x]-=1
+            Merge(x,y-1)
+                        
     # On the right
     if x+1 < 5:
         if blocks[x][y]!=0 and blocks[x+1][y] != 0 and blocks[x][y][0] == blocks[x+1][y][0]:
