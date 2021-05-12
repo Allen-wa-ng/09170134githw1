@@ -47,11 +47,11 @@ pygame.display.set_caption('2048 V.2')  # caption
 def Merge(x, y):
     global index_y
     global score
-    # print(x," ",y)
-    # print("value ",blocks[x][y][0])
+    print("Position: ",x," ",y)
+    print("Value: ",blocks[x][y][0])
     # T shape
     if x > 0 and x+1 < 5 and y > 0:
-        if blocks[x][y] != 0 and blocks[x-1][y]!=0 and blocks[x][y-1] !=0 and blocks[x+1][y] != 0 and blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0] and blocks[x][y][0] == blocks[x+1][y][0]:
+        if blocks[x][y] != 0 and blocks[x-1][y] != 0 and blocks[x][y-1] != 0 and blocks[x+1][y] != 0 and blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0] and blocks[x][y][0] == blocks[x+1][y][0]:
             print("T shape")
             blocks[x][y-1][0] *= 4
             blocks[x-1][y] = 0
@@ -62,7 +62,7 @@ def Merge(x, y):
                     print("dropped!")
                     blocks[x-1][i][2] += 70
             for i in range(y, 6):
-                if blocks[x][i]!=0:
+                if blocks[x][i] != 0:
                     print("dropped!")
                     blocks[x][i][2] += 70
             for i in range(y, 6):
@@ -70,13 +70,13 @@ def Merge(x, y):
                     print("dropped!")
                     blocks[x+1][i][2] += 70
             score += blocks[x][y-1][0]
-            index_y[x-1]-=1
-            index_y[x] -=1
-            index_y[x+1]-=1
-            Merge(x,y)
+            index_y[x-1] -= 1
+            index_y[x] -= 1
+            index_y[x+1] -= 1
+            Merge(x, y)
     # horizontal three shape
     if x > 0 and x+1 < 5:
-        if blocks[x][y] != 0 and blocks[x-1][y]!=0 and blocks[x+1][y]!= 0 and blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x+1][y][0]:
+        if blocks[x][y] != 0 and blocks[x-1][y] != 0 and blocks[x+1][y] != 0 and blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x+1][y][0]:
             print("horizontal three shape")
             blocks[x][y][0] *= 4
             blocks[x-1][y] = 0
@@ -90,11 +90,13 @@ def Merge(x, y):
                     print("dropped!")
                     blocks[x+1][i][2] += 70
             score += blocks[x][y][0]
-            Merge(x,y)
-            
+            index_y[x-1] -= 1
+            index_y[x+1] -= 1
+            Merge(x, y)
+
     # left and right 7 shape
     if x > 0 and y > 0:
-        if blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
+        if blocks[x][y]!=0 and blocks[x-1][y]!=0 and blocks[x][y-1]!=0 and blocks[x][y][0] == blocks[x-1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
             print("left 7 shape")
             blocks[x][y-1][0] *= 4
             blocks[x-1][y] = 0
@@ -107,13 +109,13 @@ def Merge(x, y):
                 if blocks[x][i] != 0:
                     print("dropped!")
                     blocks[x][i][2] += 70
-            index_y[x-1]-=1
-            index_y[x] -=1
+            index_y[x-1] -= 1
+            index_y[x] -= 1
             score += blocks[x][y-1][0]
-            Merge(x,y-1)
-            
+            Merge(x, y-1)
+
     if x+1 < len(blocks) and y > 0:
-        if blocks[x][y][0] == blocks[x+1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
+        if blocks[x][y]!=0 and blocks[x][y-1]!=0 and blocks[x+1][y]!=0 and blocks[x][y][0] == blocks[x+1][y][0] and blocks[x][y][0] == blocks[x][y-1][0]:
             print("gamma shape")
             blocks[x][y-1][0] *= 4
             blocks[x+1][y] = 0
@@ -127,13 +129,13 @@ def Merge(x, y):
                     print("dropped!")
                     blocks[x][i][2] += 70
             score += blocks[x][y-1][0]
-            index_y[x+1]-=1
-            index_y[x]-=1
-            Merge(x,y-1)
-                        
+            index_y[x+1] -= 1
+            index_y[x] -= 1
+            Merge(x, y-1)
+
     # On the right
     if x+1 < 5:
-        if blocks[x][y]!=0 and blocks[x+1][y] != 0 and blocks[x][y][0] == blocks[x+1][y][0]:
+        if blocks[x][y] != 0 and blocks[x+1][y] != 0 and blocks[x][y][0] == blocks[x+1][y][0]:
             print("right")
             blocks[x][y][0] *= 2
             blocks[x+1][y] = 0
@@ -146,7 +148,7 @@ def Merge(x, y):
             Merge(x, y)
     if x > 0 and x < 5:
         # On the left
-        if blocks[x][y]!=0 and blocks[x-1][y] != 0 and blocks[x][y][0] == blocks[x-1][y][0]:
+        if blocks[x][y] != 0 and blocks[x-1][y] != 0 and blocks[x][y][0] == blocks[x-1][y][0]:
             print("left")
             blocks[x][y][0] *= 2
             blocks[x-1][y] = 0
@@ -158,7 +160,7 @@ def Merge(x, y):
             score += blocks[x][y][0]
             Merge(x, y)
     if y > 0:
-        if blocks[x][y]!= 0 and blocks[x][y-1] != 0 and blocks[x][y][0] == blocks[x][y-1][0]:
+        if blocks[x][y] != 0 and blocks[x][y-1] != 0 and blocks[x][y][0] == blocks[x][y-1][0]:
             print("up and down")
             blocks[x][y-1][0] *= 2
             blocks[x][y] = 0
@@ -324,7 +326,6 @@ def blockAppend():
         l1.append(x_axis)
         l1.append(max_y_axis)
         blocks[track][index_y[track]] = l1
-        print(track, " ", index_y[track])
         Merge(track, index_y[track])
         index_y[track] += 1
         # print(blocks)
@@ -486,7 +487,7 @@ while Running:
                     for i in range(5):
                         blocks.append([0, 0, 0, 0, 0, 0])
                     pygame.mixer.music.play(-1)  # music play
-                    index_y = [0,0,0,0,0,0]
+                    index_y = [0, 0, 0, 0, 0, 0]
                     start_time = time.time()  # time
                     end_time = time.time()
                     pause_dur = 0
