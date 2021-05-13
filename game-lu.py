@@ -85,7 +85,7 @@ def dropAboveBlocks(x, y):
 # Given a line number and merge from top of the line
 def merge(x, y):
     global score
-    
+
     if not x>=0 or not x<=5:
         return
     if not y>=0 or not len(blocks[x])-1>=y:
@@ -228,7 +228,7 @@ def getTimeformat(totalSecond):
     minute=totalSecond/60
     return "{0:0=2d}:{1:0=2d}".format(int(minute), int(second))
 
-# 
+# Change the log base
 def getBaseLog(x, y):
   return math.log(y) / math.log(x)
 
@@ -283,7 +283,6 @@ def drawAllBlocks():
                 if not gameOver:
                     drawBlock(block[0], block[1], block[2])
     
-
 # Draw time
 def drawTime():
     global lastLoopPaused
@@ -383,7 +382,7 @@ while True:
                 pause = not pause
             elif pause:
                 if mouseX in range(175,325) and mouseY in range(300,450):
-                    pause = False;
+                    pause = False
             # Click the track
             elif mouseX in range(76,426) and  mouseY in range(221,653):
                 track = int((mouseX-76)/70)
