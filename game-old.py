@@ -269,6 +269,7 @@ def MergeOld(r, l):
                         for i in range(y, len(blocks[x-1])):
                             print("dropped!")
                             blocks[x-1][i][2] += 70
+                            blocks[x-1][i-1]=blocks[x-1][i]
                         score += blocks[x][y-1][0]
                         continue
                 except IndexError:
@@ -283,6 +284,7 @@ def MergeOld(r, l):
                         for i in range(y, len(blocks[x])):
                             print("dropped")
                             blocks[x][i][2] += 70
+                            blocks[x][i-1]=blocks[x][i]
                         score += blocks[x][y-1][0]
                         continue
                 except IndexError:

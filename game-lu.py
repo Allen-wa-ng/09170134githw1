@@ -106,6 +106,10 @@ def merge(x, y):
                 merge(x,y-1)
                 merge(x-1, y)
                 merge(x+1, y)
+                # something about to check above
+                merge(x, len(blocks[x])-1)
+                merge(x-1, len(blocks[x-1])-1)
+                merge(x+1, len(blocks[x+1])-1)
                 return
     
     # Check right and down (Gamma shape)
@@ -120,6 +124,9 @@ def merge(x, y):
                 merge(x,y)
                 merge(x,y-1)
                 merge(x+1,y)
+                # something about to check above
+                merge(x,len(blocks[x])-1)
+                merge(x+1,len(blocks[x+1])-1)
                 return
     # Check left and down (7 Shape)
     if x>0 and y>0:
@@ -133,6 +140,9 @@ def merge(x, y):
                 merge(x,y)
                 merge(x,y-1)
                 merge(x-1,y)
+                # something about to check above
+                merge(x,len(blocks[x])-1)
+                merge(x-1,len(blocks[x-1])-1)
                 return
     # Check left and right (Horizontal shape)
     if x>0 and x<4:
@@ -145,8 +155,12 @@ def merge(x, y):
                 dropAboveBlocks(x-1,y)
                 dropAboveBlocks(x+1,y)
                 merge(x,y)
-                merge(x-1,y-1)
-                merge(x+1,y-1)
+                merge(x-1,y)
+                merge(x+1,y)
+                # something about to check above
+                merge(x,len(blocks[x])-1)
+                merge(x-1,len(blocks[x-1])-1)
+                merge(x+1,len(blocks[x+1])-1)
                 return
     # Check left
     if x>0:
@@ -158,6 +172,8 @@ def merge(x, y):
                 dropAboveBlocks(x-1,y)
                 merge(x,y)
                 merge(x-1,y-1)
+                # somehting baout to check above
+                merge(x-1, len(blocks[x-1])-1)
                 return
     # Check right
     if x<4:
@@ -169,6 +185,8 @@ def merge(x, y):
                 dropAboveBlocks(x+1, y)
                 merge(x,y)
                 merge(x+1,y-1)
+                # something about to check above
+                merge(x+1, len(blocks[x+1])-1)
                 return
     # Check down
     if y>0:
@@ -178,6 +196,8 @@ def merge(x, y):
             dropAboveBlocks(x,y)
             merge(x,y)
             merge(x,y-1)
+            # something about to check above
+            merge(x, len(blocks[x])-1)
             return
 
         
