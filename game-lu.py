@@ -383,7 +383,7 @@ while True:
                 pause = not pause
             elif pause:
                 if mouseX in range(175,325) and mouseY in range(300,450):
-                    pause = False;
+                    pause = False
             # Click the track
             elif mouseX in range(76,426) and  mouseY in range(221,653):
                 track = int((mouseX-76)/70)
