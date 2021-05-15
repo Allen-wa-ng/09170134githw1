@@ -15,8 +15,10 @@ random.seed()
 ### Color set
 white = (255,255,255)
 black = (0,0,0)
+
 # The color of "next block" hint
 nextBlockBorderColor = (255,200,200)
+
 # The color of the block that every represent color for exponential of two
 colorList = [(255,  0,  0), (  0,255,  0), (204,153,255), (209,237,  0), (209,237,240), 
              (209, 40,240), (254,239,222), (  0,239,222), (255,255, 80), ( 51,102,255), 
@@ -75,18 +77,21 @@ def resetGame():
     
     # Play already loaded background music, -1 => infinite replace
     pygame.mixer.music.play(-1)
+
 # get the maximum tracks with the most elements
 def getMaxTrack():
     elems = []
     for i in range(5):
         elems.append(len(blocks[i]))
     return elems.index(max(elems))
+
 # Drop the vertical line of block down to specific position (drop one unit height)
 def dropAboveBlocks(x, y):
     if len(blocks[x]) > 0:
         for i in range(y, len(blocks[x])-1):
             blocks[x][i][0] = blocks[x][i+1][0]
         del blocks[x][len(blocks[x])-1]
+
 # a super power to remove the track that has the most elements
 def super_vert():
     max_track = getMaxTrack()
@@ -239,7 +244,7 @@ def getNewNextBlock():
     track = random.randint(1,5)-1 #number of track 0~4
     currentNumber = nextNumber
     if score > 40000:
-        nextNumber = pow(2, random.randint(6,10))
+        nextNumber = pow(2, random.randint(4,10))
     elif score > 15000:
         nextNumber = pow(2, random.randint(4,7))
     else:
@@ -324,20 +329,15 @@ def drawBorder():
     for i in range(5):
         pygame.draw.lines(screen, white, True, [(75+i*70,150),(75+i*70,650)], 5)
 
-# Draw game over screen
-def drawGameOverScreen():
-    screen.fill(white)
-    drawText('Game Over', 'arial.ttf', 40, black, (145,150))
-    drawText("Highest Score:", 'arial.ttf', 30, black, (100,220))
-    drawText(str(highest), 'arial.ttf', 30, black, (305,220))
-    drawText("Your Score:" ,'arial.ttf',30,black,(120,270))
-    drawText(str(score),'arial.ttf',30,black,(280,272))
-    pygame.draw.rect(screen, black, (160,330,185,40), 5)
-    drawText('Restart','arial.ttf',25,black,(215,334))
-    pygame.draw.rect(screen, black, (160,380,185,40), 5)
-    drawText('Quit','arial.ttf',25,black,(225,385))
-    pygame.display.update()
-    
+# Draw all text
+def drawAllTexts():
+    drawText('Drop The Number!', 'arial.ttf',32, (255,255,80), (110,35))
+    drawText('Next Block ►','arial.ttf',17,white,(57,88))
+    drawText('Score:'+str(score),'arial.ttf',25,black,(110,693))
+    drawText('II', 'arial.ttf',28,(255,255,255),(63,692))
+    for i in range(5):
+        drawText('†', 'arial.ttf',47,(255,0,0),(98+i*70,161))
+        
 # Draw blocks
 def drawAllBlocks():
     global blocks
@@ -375,7 +375,7 @@ def drawGameOverScreen():
     screen.fill(white)
     drawText('Game Over', 'arial.ttf', 40, black, (145,150))
     drawText("Highest Score:", 'arial.ttf', 30, black, (100,220))
-    drawText(str(highest), 'arial.ttf', 30, black, (305,220))
+    drawText(str(highest), 'arial.ttf', 30, black, (304,221))
     drawText("Your Score:" ,'arial.ttf',30,black,(120,270))
     drawText(str(score),'arial.ttf',30,black,(280,272))
     pygame.draw.rect(screen, black, (160,330,185,40), 5)
@@ -410,7 +410,6 @@ while True:
                     else:
                         hs.write(str(highest))
                 
-        
         # Draw
         drawBackground()
         drawBorder()
