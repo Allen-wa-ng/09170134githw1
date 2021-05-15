@@ -32,8 +32,6 @@ pygame.display.set_caption('2048 V.2') #caption
 pygame.mixer.music.load('let it go.ogg') #let it go.mp3 #mission.mp3
 pygame.mixer.music.set_volume(0.5) #set volume
 
-###score_records
-hs = open("score.txt", "w+")
 
 ### Set global variable
 # If the game is pause
@@ -91,9 +89,10 @@ def dropAboveBlocks(x, y):
         del blocks[x][len(blocks[x])-1]
 # a super power to remove the track that has the most elements
 def super_vert():
+    max_track = getMaxTrack()
     for i in range(6):
         try:
-            del blocks[getMaxTrack()][0]
+            del blocks[max_track][0]
         except:
             pass
 
@@ -288,7 +287,12 @@ def getBaseLog(x, y):
 
 # Draw a block
 def drawBlock(value,x,y):
-    a=pygame.draw.rect(screen, colorList[int(getBaseLog(2,value))-1], (x,y,68,68), 0)
+    # check whether the color is enough for the block
+    if int(getBaseLog(2,value))-1 < 13:
+        a=pygame.draw.rect(screen, colorList[int(getBaseLog(2,value))-1], (x,y,68,68), 0)
+    else:
+        a=pygame.draw.rect(screen, colorList[12], (x,y,68,68), 0)
+
     b=pygame.draw.rect(screen,black, (x,y,68,68), 4)
     font=pygame.font.Font('arial.ttf',30)
     textX =x+26-len(str(value))*5
@@ -397,14 +401,14 @@ while True:
                 pygame.mixer.music.stop()
                 gameOver = True
                 highest = 0
-                hs.read(highest)
-                print(highest)
-                if int(highest)<score:
-                    hs.write(str(score))
-                else:
-                    hs.write(str(highest))
-                hs.close()
-                hs = open("score.txt","w+")
+                
+                with open('score.txt', 'w+') as hs:
+                    hs.read(highest)
+                    print(highest)
+                    if int(highest)<score:
+                        hs.write(str(score))
+                    else:
+                        hs.write(str(highest))
                 
         
         # Draw
