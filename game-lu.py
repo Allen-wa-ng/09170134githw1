@@ -339,12 +339,14 @@ def drawNextBlock():
 def drawGameOverScreen():
     screen.fill(white)
     drawText('Game Over', 'arial.ttf', 40, black, (145,150))
-    drawText("Score:" ,'arial.ttf',30,black,(155,236))
-    drawText(str(score),'arial.ttf',35,black,(255,235))
-    pygame.draw.rect(screen, black, (160,320,185,40), 5)
-    drawText('Restart','arial.ttf',25,black,(215,326))
+    drawText("Highest Score:", 'arial.ttf', 30, black, (100,220))
+    drawText(str(highest), 'arial.ttf', 30, black, (305,220))
+    drawText("Your Score:" ,'arial.ttf',30,black,(120,270))
+    drawText(str(score),'arial.ttf',30,black,(280,272))
+    pygame.draw.rect(screen, black, (160,330,185,40), 5)
+    drawText('Restart','arial.ttf',25,black,(215,334))
     pygame.draw.rect(screen, black, (160,380,185,40), 5)
-    drawText('Quit','arial.ttf',25,black,(225,386))
+    drawText('Quit','arial.ttf',25,black,(225,385))
     pygame.display.update()
 
 resetGame()
@@ -409,7 +411,7 @@ while True:
             mouseY = pygame.mouse.get_pos()[1]
             # Restart button
             if gameOver:
-                if mouseX in range(160,345) and mouseY in range(320,360):
+                if mouseX in range(160,345) and mouseY in range(330,370):
                         resetGame()
             # Quit button
                 elif mouseY in range(380,420):
