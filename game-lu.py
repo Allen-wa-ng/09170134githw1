@@ -51,7 +51,7 @@ startTime = time.time()
 score = 0
 # The variable to save if the last main loop is paused, useful to check if it is need to calculate the pause duration
 lastLoopPaused = False
-
+    
 # Initial the game (start or restart)
 def resetGame():
     random.seed()
@@ -90,7 +90,7 @@ def merge(x, y):
         return
     if not y>=0 or not len(blocks[x])-1>=y:
         return
-    
+        
     # Check left and right and down (T Shape)
     if x>0 and x<4 and y>0:
         leftLineY = len(blocks[x-1])-1
@@ -111,7 +111,6 @@ def merge(x, y):
                 merge(x-1, len(blocks[x-1])-1)
                 merge(x+1, len(blocks[x+1])-1)
                 return
-    
     # Check right and down (Gamma shape)
     if x<4 and y>0:
         rightLineY = len(blocks[x+1])-1
@@ -200,7 +199,6 @@ def merge(x, y):
             merge(x, len(blocks[x])-1)
             return
 
-        
 # Set the next number to current number and randomly create a next number
 def getNewNextBlock():
     global x_axis
@@ -229,6 +227,12 @@ def blockAppend():
     max_y_axis = 582-70*(len(blocks[track]))
     if max_y_axis > 223:
         # print(blocks)
+        block = [currentNumber, x_axis, max_y_axis]
+        blocks[track].append(block)
+        merge(track, len(blocks[track])-1)
+        getNewNextBlock()
+        return True
+    elif currentNumber==blocks[track][-1][0]:
         block = [currentNumber, x_axis, max_y_axis]
         blocks[track].append(block)
         merge(track, len(blocks[track])-1)
