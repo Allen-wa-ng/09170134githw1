@@ -320,15 +320,20 @@ def drawBorder():
     for i in range(5):
         pygame.draw.lines(screen, white, True, [(75+i*70,150),(75+i*70,650)], 5)
 
-# Draw all text
-def drawAllTexts():
-    drawText('Drop The Number!', 'arial.ttf',32, (255,255,80), (110,35))
-    drawText('Next Block ►','arial.ttf',17,white,(57,88))
-    drawText('Score:'+str(score),'arial.ttf',25,black,(110,693))
-    drawText('II', 'arial.ttf',28,(255,255,255),(63,692))
-    for i in range(5):
-        drawText('†', 'arial.ttf',47,(255,0,0),(98+i*70,161))
-        
+# Draw game over screen
+def drawGameOverScreen():
+    screen.fill(white)
+    drawText('Game Over', 'arial.ttf', 40, black, (145,150))
+    drawText("Highest Score:", 'arial.ttf', 30, black, (100,220))
+    drawText(str(highest), 'arial.ttf', 30, black, (305,220))
+    drawText("Your Score:" ,'arial.ttf',30,black,(120,270))
+    drawText(str(score),'arial.ttf',30,black,(280,272))
+    pygame.draw.rect(screen, black, (160,330,185,40), 5)
+    drawText('Restart','arial.ttf',25,black,(215,334))
+    pygame.draw.rect(screen, black, (160,380,185,40), 5)
+    drawText('Quit','arial.ttf',25,black,(225,385))
+    pygame.display.update()
+    
 # Draw blocks
 def drawAllBlocks():
     global blocks
