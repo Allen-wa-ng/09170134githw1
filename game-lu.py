@@ -32,8 +32,6 @@ pygame.display.set_caption('2048 V.2') #caption
 pygame.mixer.music.load('let it go.ogg') #let it go.mp3 #mission.mp3
 pygame.mixer.music.set_volume(0.5) #set volume
 
-###score_records
-hs = open("score.txt", "w+")
 
 ### Set global variable
 # If the game is pause
@@ -391,14 +389,14 @@ while True:
                 pygame.mixer.music.stop()
                 gameOver = True
                 highest = 0
-                hs.read(highest)
-                print(highest)
-                if int(highest)<score:
-                    hs.write(str(score))
-                else:
-                    hs.write(str(highest))
-                hs.close()
-                hs = open("score.txt","w+")
+                
+                with open('score.txt', 'w+') as hs:
+                    hs.read(highest)
+                    print(highest)
+                    if int(highest)<score:
+                        hs.write(str(score))
+                    else:
+                        hs.write(str(highest))
                 
         
         # Draw
