@@ -428,12 +428,16 @@ while True:
                 max_y_axis = 582-70*(len(blocks[track]))
                 blockAppend()
             elif mouseX in range(348,395) and mouseY in range(685,729):
-                try:
+                
                     for i in range(0,5):
-                        del blocks[i][0]
+                        try:
+                            del blocks[i][0]
+                        except IndexError:
+                            pass
                         for j in range(len(blocks[i])):
-                            blocks[i][j][2]+=70
-                            print("dropped")
-                except IndexError:
-                    pass
+                            try:
+                                blocks[i][j][2]+=70
+                                print("dropped")
+                            except IndexError:
+                                pass
 
