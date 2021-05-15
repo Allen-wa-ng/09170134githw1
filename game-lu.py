@@ -291,7 +291,7 @@ def drawBlock(value,x,y):
     if int(getBaseLog(2,value))-1 < 13:
         a=pygame.draw.rect(screen, colorList[int(getBaseLog(2,value))-1], (x,y,68,68), 0)
     else:
-        a=pygame.draw.rect(screen, colorList[13], (x,y,68,68), 0)
+        a=pygame.draw.rect(screen, colorList[12], (x,y,68,68), 0)
 
     b=pygame.draw.rect(screen,black, (x,y,68,68), 4)
     font=pygame.font.Font('arial.ttf',30)
