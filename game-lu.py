@@ -287,7 +287,12 @@ def getBaseLog(x, y):
 
 # Draw a block
 def drawBlock(value,x,y):
-    a=pygame.draw.rect(screen, colorList[int(getBaseLog(2,value))-1], (x,y,68,68), 0)
+    # check whether the color is enough for the block
+    if int(getBaseLog(2,value))-1 < 13:
+        a=pygame.draw.rect(screen, colorList[int(getBaseLog(2,value))-1], (x,y,68,68), 0)
+    else:
+        a=pygame.draw.rect(screen, colorList[13], (x,y,68,68), 0)
+
     b=pygame.draw.rect(screen,black, (x,y,68,68), 4)
     font=pygame.font.Font('arial.ttf',30)
     textX =x+26-len(str(value))*5
