@@ -91,9 +91,10 @@ def dropAboveBlocks(x, y):
         del blocks[x][len(blocks[x])-1]
 # a super power to remove the track that has the most elements
 def super_vert():
+    max_track = getMaxTrack()
     for i in range(6):
         try:
-            del blocks[getMaxTrack()][0]
+            del blocks[max_track][0]
         except:
             pass
 
