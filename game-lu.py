@@ -371,7 +371,7 @@ while True:
                 else:
                     hs.write(str(highest))
                 hs.close()
-                hs = open("score.txt","r+")
+                hs = open("score.txt","w+")
                 
         
         # Draw
@@ -404,7 +404,7 @@ while True:
             pygame.quit()
             quit()
         if event.type==pygame.MOUSEBUTTONDOWN:
-            #print(pygame.mouse.get_pos())
+            print(pygame.mouse.get_pos())
             mouseX = pygame.mouse.get_pos()[0]
             mouseY = pygame.mouse.get_pos()[1]
             # Restart button
@@ -427,4 +427,13 @@ while True:
                 x_axis = 76+70*track
                 max_y_axis = 582-70*(len(blocks[track]))
                 blockAppend()
+            elif mouseX in range(348,395) and mouseY in range(685,729):
+                try:
+                    for i in range(0,5):
+                        del blocks[i][0]
+                        for j in range(len(blocks[i])):
+                            blocks[i][j][2]+=70
+                            print("dropped")
+                except IndexError:
+                    pass
 
