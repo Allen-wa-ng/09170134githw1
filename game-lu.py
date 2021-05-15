@@ -77,13 +77,39 @@ def resetGame():
     
     # Play already loaded background music, -1 => infinite replace
     pygame.mixer.music.play(-1)
-    
+# get the maximum tracks with the most elements
+def getMaxTrack():
+    elems = []
+    for i in range(5):
+        elems.append(len(blocks[i]))
+    return elems.index(max(elems))
 # Drop the vertical line of block down to specific position (drop one unit height)
 def dropAboveBlocks(x, y):
     if len(blocks[x]) > 0:
         for i in range(y, len(blocks[x])-1):
             blocks[x][i][0] = blocks[x][i+1][0]
         del blocks[x][len(blocks[x])-1]
+# a super power to remove the track that has the most elements
+def super_vert():
+    for i in range(6):
+        try:
+            del blocks[getMaxTrack()][0]
+        except:
+            pass
+
+# a superpower to remove the first horizontal line
+def super_hor():
+    for i in range(0,5):
+        try:
+            del blocks[i][0]
+        except IndexError:
+            pass
+        for j in range(len(blocks[i])):
+            try:
+                blocks[i][j][2]+=70
+                print("dropped")
+            except IndexError:
+                pass
 
 # Given a line number and merge from top of the line
 def merge(x, y):
@@ -428,16 +454,6 @@ while True:
                 max_y_axis = 582-70*(len(blocks[track]))
                 blockAppend()
             elif mouseX in range(348,395) and mouseY in range(685,729):
-                
-                    for i in range(0,5):
-                        try:
-                            del blocks[i][0]
-                        except IndexError:
-                            pass
-                        for j in range(len(blocks[i])):
-                            try:
-                                blocks[i][j][2]+=70
-                                print("dropped")
-                            except IndexError:
-                                pass
-
+                super_hor()
+            elif mouseX in range(404,450) and mouseY in range(685,728):
+                super_vert()
