@@ -91,7 +91,7 @@ def merge(x, y):
     if not y>=0 or not len(blocks[x])-1>=y:
         return
     
-    # Check left and right and down
+    # Check left and right and down (T Shape)
     if x>0 and x<4 and y>0:
         leftLineY = len(blocks[x-1])-1
         rightLineY = len(blocks[x+1])-1
@@ -106,9 +106,13 @@ def merge(x, y):
                 merge(x,y-1)
                 merge(x-1, y)
                 merge(x+1, y)
+                # something about to check above
+                merge(x, len(blocks[x])-1)
+                merge(x-1, len(blocks[x-1])-1)
+                merge(x+1, len(blocks[x+1])-1)
                 return
     
-    # Check right and down
+    # Check right and down (Gamma shape)
     if x<4 and y>0:
         rightLineY = len(blocks[x+1])-1
         if rightLineY>=y:
@@ -120,8 +124,11 @@ def merge(x, y):
                 merge(x,y)
                 merge(x,y-1)
                 merge(x+1,y)
+                # something about to check above
+                merge(x,len(blocks[x])-1)
+                merge(x+1,len(blocks[x+1])-1)
                 return
-    # Check left and down
+    # Check left and down (7 Shape)
     if x>0 and y>0:
         leftLineY = len(blocks[x-1])-1
         if leftLineY>=y:
@@ -133,8 +140,11 @@ def merge(x, y):
                 merge(x,y)
                 merge(x,y-1)
                 merge(x-1,y)
+                # something about to check above
+                merge(x,len(blocks[x])-1)
+                merge(x-1,len(blocks[x-1])-1)
                 return
-    # Check left and right
+    # Check left and right (Horizontal shape)
     if x>0 and x<4:
         leftLineY = len(blocks[x-1])-1
         rightLineY = len(blocks[x+1])-1
@@ -147,6 +157,10 @@ def merge(x, y):
                 merge(x,y)
                 merge(x-1,y)
                 merge(x+1,y)
+                # something about to check above
+                merge(x,len(blocks[x])-1)
+                merge(x-1,len(blocks[x-1])-1)
+                merge(x+1,len(blocks[x+1])-1)
                 return
     # Check left
     if x>0:
@@ -157,7 +171,9 @@ def merge(x, y):
                 score += blocks[x][y][0]
                 dropAboveBlocks(x-1,y)
                 merge(x,y)
-                merge(x-1,y)
+                merge(x-1,y-1)
+                # somehting baout to check above
+                merge(x-1, len(blocks[x-1])-1)
                 return
     # Check right
     if x<4:
@@ -168,7 +184,9 @@ def merge(x, y):
                 score += blocks[x][y][0]
                 dropAboveBlocks(x+1, y)
                 merge(x,y)
-                merge(x+1,y)
+                merge(x+1,y-1)
+                # something about to check above
+                merge(x+1, len(blocks[x+1])-1)
                 return
     # Check down
     if y>0:
@@ -178,7 +196,10 @@ def merge(x, y):
             dropAboveBlocks(x,y)
             merge(x,y)
             merge(x,y-1)
+            # something about to check above
+            merge(x, len(blocks[x])-1)
             return
+
         
 # Set the next number to current number and randomly create a next number
 def getNewNextBlock():
