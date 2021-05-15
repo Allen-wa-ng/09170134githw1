@@ -213,10 +213,10 @@ def getNewNextBlock():
     random.seed()
     track = random.randint(1,5)-1 #number of track 0~4
     currentNumber = nextNumber
-    if score > 30000:
-        nextNumber = pow(2, random.randint(1,8))
+    if score > 40000:
+        nextNumber = pow(2, random.randint(6,10))
     elif score > 15000:
-        nextNumber = pow(2, random.randint(1,7))
+        nextNumber = pow(2, random.randint(4,7))
     else:
         nextNumber = pow(2,random.randint(1,5))
     x_axis=75+70*track
