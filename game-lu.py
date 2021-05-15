@@ -32,6 +32,9 @@ pygame.display.set_caption('2048 V.2') #caption
 pygame.mixer.music.load('let it go.ogg') #let it go.mp3 #mission.mp3
 pygame.mixer.music.set_volume(0.5) #set volume
 
+###score_records
+hs = open("score.txt", "w+")
+
 ### Set global variable
 # If the game is pause
 pause = False
@@ -215,7 +218,7 @@ def getNewNextBlock():
     elif score > 15000:
         nextNumber = pow(2, random.randint(1,7))
     else:
-        nextNumber = pow(2,random.randint(1,6))
+        nextNumber = pow(2,random.randint(1,5))
     x_axis=75+70*track
     
 # Create a stable block
@@ -360,6 +363,16 @@ while True:
             if not blockAppend():
                 pygame.mixer.music.stop()
                 gameOver = True
+                highest = 0
+                hs.read(highest)
+                print(highest)
+                if int(highest)<score:
+                    hs.write(str(score))
+                else:
+                    hs.write(str(highest))
+                hs.close()
+                hs = open("score.txt","r+")
+                
         
         # Draw
         drawBackground()
@@ -414,3 +427,4 @@ while True:
                 x_axis = 76+70*track
                 max_y_axis = 582-70*(len(blocks[track]))
                 blockAppend()
+
