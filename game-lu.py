@@ -54,7 +54,9 @@ startTime = time.time()
 score = 0
 # The variable to save if the last main loop is paused, useful to check if it is need to calculate the pause duration
 lastLoopPaused = False
-    
+# highest score
+highest = 0
+
 # Initial the game (start or restart)
 def resetGame():
     random.seed()
@@ -372,6 +374,7 @@ def drawNextBlock():
 
 # Draw game over screen
 def drawGameOverScreen():
+    global highest
     screen.fill(white)
     drawText('Game Over', 'arial.ttf', 40, black, (145,150))
     drawText("Highest Score:", 'arial.ttf', 30, black, (100,220))
@@ -400,16 +403,13 @@ while True:
             if not blockAppend():
                 pygame.mixer.music.stop()
                 gameOver = True
-                highest = 0
-                
-                with open('score.txt', 'w+') as hs:
-                    hs.read(highest)
-                    print(highest)
-                    if int(highest)<score:
+                with open('score.txt', 'r') as hs:
+                    highest = int(hs.read())
+                with open('score.txt', 'w') as hs:
+                    if highest < score:
                         hs.write(str(score))
                     else:
                         hs.write(str(highest))
-                
         # Draw
         drawBackground()
         drawBorder()
