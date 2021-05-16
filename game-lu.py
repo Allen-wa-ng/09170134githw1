@@ -413,6 +413,8 @@ while True:
                         hs.write(str(score))
                     else:
                         hs.write(str(highest))
+                with open('score.txt', 'r') as hs:
+                    highest = int(hs.read())
         # Draw
         drawBackground()
         drawBorder()
