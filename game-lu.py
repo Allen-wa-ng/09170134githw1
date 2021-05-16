@@ -303,7 +303,10 @@ def drawBlock(value,x,y):
     b=pygame.draw.rect(screen,black, (x,y,68,68), 4)
     font=pygame.font.Font('arial.ttf',30)
     textX =x+26-len(str(value))*5
-    text=font.render(str(value),True,black,colorList[int(getBaseLog(2,value))-1])
+    if value <= 8192:
+        text=font.render(str(value),True,black,colorList[int(getBaseLog(2,value))-1])
+    else:
+        text=font.render(str(value),True,black,colorList[12])
     screen.blit(text,(textX,y+15))
     return a,b,text,value,x,y
 
