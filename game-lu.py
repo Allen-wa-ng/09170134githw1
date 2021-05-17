@@ -329,7 +329,10 @@ def drawBorder():
     pygame.draw.rect(screen, white, (75,150,350,500), 5)
     pygame.draw.rect(screen, white, (50,685,45,45), 5)
     pygame.draw.rect(screen, white, (350,685,45,45), 5)
+
     pygame.draw.rect(screen, white, (405,685,45,45), 5)
+    image = pygame.image.load("vertical.png")
+    screen.blit(image, (408, 688))
     pygame.draw.rect(screen, white, (105,685,235,45), 0)
     for i in range(5):
         pygame.draw.lines(screen, white, True, [(75+i*70,150),(75+i*70,650)], 5)
