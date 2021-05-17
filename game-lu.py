@@ -430,8 +430,8 @@ while True:
         
         # Draw pop pause button
         if pause:
-            pygame.draw.rect(screen, nextBlockBorderColor, (175,300,150,150), 0)
-            drawText('II', 'arial.ttf', 100, black, (220,322))
+            image = pygame.image.load("pause.png")
+            screen.blit(image, (140, 290))
         
         # Flush draw buffer
         pygame.display.update()
