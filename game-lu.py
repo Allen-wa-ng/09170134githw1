@@ -328,16 +328,19 @@ def drawBorder():
     pygame.draw.rect(screen, white, (50,25,400,650), 5)
     pygame.draw.rect(screen, white, (75,150,350,500), 5)
     pygame.draw.rect(screen, white, (50,685,45,45), 5)
-    pygame.draw.rect(screen, white, (350,685,45,45), 5)
-    # image = pygame.image.load("fire1.png")
-    # screen.blit(image, (140, 290))
-    pygame.draw.rect(screen, white, (405,685,45,45), 5)
-    # image = pygame.image.load("vertical.png")
-    # screen.blit(image, (140, 290))
+    pygame.draw.rect(screen, white, (350,685,45,45), 0)
+    pygame.draw.rect(screen, white, (405,685,45,45), 0)
     pygame.draw.rect(screen, white, (105,685,235,45), 0)
     for i in range(5):
         pygame.draw.lines(screen, white, True, [(75+i*70,150),(75+i*70,650)], 5)
+    #insert image
+    image = pygame.image.load("fire-4.png")
+    screen.blit(image, (343, 678))
+    image = pygame.image.load("vertical-2.png")
+    screen.blit(image, (404, 681))
 
+    
+    
 # Draw all text
 def drawAllTexts():
     drawText('Drop The Number!', 'arial.ttf',32, (255,255,80), (110,35))
@@ -399,7 +402,6 @@ resetGame()
 # Main loop
 while True:
     sleep(0.02)
-    
     if not gameOver:
         if not pause:
             y_axis += 1
@@ -436,6 +438,8 @@ while True:
         if pause:
             image = pygame.image.load("pause.png")
             screen.blit(image, (140, 290))
+            image = pygame.image.load("ball-1.png")
+            screen.blit(image, (142, 294))
         
         # Flush draw buffer
         pygame.display.update()
