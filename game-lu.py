@@ -339,8 +339,6 @@ def drawBorder():
     image = pygame.image.load("vertical-2.png")
     screen.blit(image, (404, 681))
 
-    
-    
 # Draw all text
 def drawAllTexts():
     drawText('Drop The Number!', 'arial.ttf',32, (255,255,80), (110,35))
@@ -364,6 +362,7 @@ def drawTime():
     global startTime
     global stopTimeText
     global startTimeOfPause
+    global duration
     if lastLoopPaused != pause:
         if pause:
             startTimeOfPause = time.time()
@@ -387,14 +386,16 @@ def drawGameOverScreen():
     global highest
     screen.fill(white)
     drawText('Game Over', 'arial.ttf', 40, black, (145,150))
-    drawText("Highest Score:", 'arial.ttf', 30, black, (100,220))
-    drawText(str(highest), 'arial.ttf', 30, black, (304,221))
-    drawText("Your Score:" ,'arial.ttf',30,black,(120,270))
-    drawText(str(score),'arial.ttf',30,black,(280,272))
-    pygame.draw.rect(screen, black, (160,330,185,40), 5)
-    drawText('Restart','arial.ttf',25,black,(215,334))
+    drawText("TIME:", 'arial.ttf', 30, black, (165,220))
+    drawText(str(getTimeformat(duration)), 'arial.ttf', 30, black, (252,220))
+    drawText("Highest Score:", 'arial.ttf', 30, black, (100,270))
+    drawText(str(highest), 'arial.ttf', 30, black, (304,271))
+    drawText("Your Score:" ,'arial.ttf',30,black,(120,320))
+    drawText(str(score),'arial.ttf',30,black,(280,322))
     pygame.draw.rect(screen, black, (160,380,185,40), 5)
-    drawText('Quit','arial.ttf',25,black,(225,385))
+    drawText('Restart','arial.ttf',25,black,(215,384))
+    pygame.draw.rect(screen, black, (160,430,185,40), 5)
+    drawText('Quit','arial.ttf',25,black,(225,435))
     pygame.display.update()
 
 resetGame()
@@ -458,10 +459,10 @@ while True:
             mouseY = pygame.mouse.get_pos()[1]
             # Restart button
             if gameOver:
-                if mouseX in range(160,345) and mouseY in range(330,370):
+                if mouseX in range(160,345) and mouseY in range(380,420):
                         resetGame()
             # Quit button
-                elif mouseY in range(380,420):
+                elif mouseY in range(430,470):
                     pygame.quit()
                     quit()
             # Pause button
