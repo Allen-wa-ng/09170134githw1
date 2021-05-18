@@ -464,13 +464,14 @@ while True:
 
             #Stop play the music
             if not mute:
-                 if mouseX in range(402,437) and mouseY in range(83,118):
-                    pygame.mixer.music.stop()
+                if mouseX in range(402,437) and mouseY in range(83,118):
                     mute = not mute
+                    pygame.mixer.music.stop()
             else:
+                mute = not mute
                 pygame.mixer.music.load('let it go.ogg') #let it go.mp3 #mission.mp3
                 pygame.mixer.music.set_volume(0.5) #set volume
-                mute = not mute
+                
 
             # Restart button
             if gameOver:
