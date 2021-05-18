@@ -36,6 +36,8 @@ pygame.mixer.music.set_volume(0.5) #set volume
 
 
 ### Set global variable
+#If mute
+mute = False
 # If the game is pause
 pause = False
 # The track of current dropping block
@@ -334,6 +336,8 @@ def drawBorder():
     for i in range(5):
         pygame.draw.lines(screen, white, True, [(75+i*70,150),(75+i*70,650)], 5)
     #insert image
+    image = pygame.image.load("mute-2.png")
+    screen.blit(image, (402, 83))
     image = pygame.image.load("fire-4.png")
     screen.blit(image, (343, 678))
     image = pygame.image.load("vertical-2.png")
@@ -374,7 +378,7 @@ def drawTime():
     else:
         duration = time.time() - startTime
         stopTimeText = duration
-    drawText('TIME:'+getTimeformat(duration),'arial.ttf',20,black,(315,91)) #display clock
+    drawText('TIME:'+getTimeformat(duration),'arial.ttf',20,black,(275,91)) #display clock
 
 # Draw next block hint
 def drawNextBlock():
@@ -434,7 +438,7 @@ while True:
         
         # Draw dropping block
         drawBlock(currentNumber,x_axis,y_axis)
-        
+
         # Draw pop pause button
         if pause:
             image = pygame.image.load("pause.png")
@@ -457,6 +461,17 @@ while True:
             print(pygame.mouse.get_pos())
             mouseX = pygame.mouse.get_pos()[0]
             mouseY = pygame.mouse.get_pos()[1]
+
+            #Stop play the music
+            if not mute:
+                 if mouseX in range(402,437) and mouseY in range(83,118):
+                    pygame.mixer.music.stop()
+                    mute = not mute
+            else:
+                pygame.mixer.music.load('let it go.ogg') #let it go.mp3 #mission.mp3
+                pygame.mixer.music.set_volume(0.5) #set volume
+                mute = not mute
+
             # Restart button
             if gameOver:
                 if mouseX in range(160,345) and mouseY in range(380,420):
