@@ -147,6 +147,11 @@ def merge(x, y):
         rightLineY = len(blocks[x+1])-1
         if leftLineY>=y and rightLineY>=y:
             if blocks[x][y][0]==blocks[x-1][y][0] and blocks[x][y][0]==blocks[x+1][y][0] and blocks[x][y][0]==blocks[x][y-1][0]:
+                old = blocks[x][y][0]
+                ii = blocks[x][y][2]
+                jj = blocks[x-1][y][0]
+                kk = blocks[x+1][y][0]
+
                 blocks[x][y-1][0] *= 8
                 score += blocks[x][y-1][0]
                 dropAboveBlocks(x,y)
@@ -166,6 +171,10 @@ def merge(x, y):
         rightLineY = len(blocks[x+1])-1
         if rightLineY>=y:
             if blocks[x][y][0]==blocks[x+1][y][0] and blocks[x][y][0]==blocks[x][y-1][0]:
+                old = blocks[x][y][0]
+                ii = blocks[x][y-1][2]
+                jj = blocks[x+1][y][1]
+
                 blocks[x][y-1][0] *= 4
                 score += blocks[x][y-1][0]
                 dropAboveBlocks(x,y)
@@ -182,10 +191,14 @@ def merge(x, y):
         leftLineY = len(blocks[x-1])-1
         if leftLineY>=y:
             if blocks[x][y][0]==blocks[x-1][y][0] and blocks[x][y][0]==blocks[x][y-1][0]:
+                old = blocks[x][y][0]
+                ii = blocks[x][y-1][2]
+                jj = blocks[x-1][y][1]
                 blocks[x][y-1][0] *= 4
                 score += blocks[x][y-1][0]
                 dropAboveBlocks(x,y)
                 dropAboveBlocks(x-1, y)
+                
                 merge(x,y)
                 merge(x,y-1)
                 merge(x-1,y)
@@ -206,7 +219,7 @@ def merge(x, y):
                 score += blocks[x][y][0]
                 dropAboveBlocks(x-1,y)
                 dropAboveBlocks(x+1,y)
-                while ii > blocks[x][y][1]:
+                while ii > blocks[x][y][1] and jj < blocks[x][y][1]:
                     # Draw
                     drawBackground()
                     drawBorder()
@@ -216,21 +229,11 @@ def merge(x, y):
                     
                     # Draw next block hint
                     drawNextBlock()
+                    
                     drawBlock(old,ii,blocks[x][y][2])
-                    pygame.display.update()
-                    ii-=1
-                while jj < blocks[x][y][1]:
-                    # Draw
-                    drawBackground()
-                    drawBorder()
-                    drawAllTexts()
-                    drawTime()
-                    drawAllBlocks()
-                    
-                    # Draw next block hint
-                    drawNextBlock()
                     drawBlock(old,jj,blocks[x][y][2])
                     pygame.display.update()
+                    ii-=1
                     jj+=1
 
                 merge(x,y)
