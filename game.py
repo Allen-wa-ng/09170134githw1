@@ -199,10 +199,40 @@ def merge(x, y):
         rightLineY = len(blocks[x+1])-1
         if leftLineY>=y and rightLineY>=y:
             if blocks[x][y][0]==blocks[x-1][y][0] and blocks[x][y][0]==blocks[x+1][y][0]:
+                old = blocks[x][y][0]
+                ii=blocks[x+1][y][1]
+                jj=blocks[x-1][y][1]
                 blocks[x][y][0] *= 4
                 score += blocks[x][y][0]
                 dropAboveBlocks(x-1,y)
                 dropAboveBlocks(x+1,y)
+                while ii > blocks[x][y][1]:
+                    # Draw
+                    drawBackground()
+                    drawBorder()
+                    drawAllTexts()
+                    drawTime()
+                    drawAllBlocks()
+                    
+                    # Draw next block hint
+                    drawNextBlock()
+                    drawBlock(old,ii,blocks[x][y][2])
+                    pygame.display.update()
+                    ii-=1
+                while jj < blocks[x][y][1]:
+                    # Draw
+                    drawBackground()
+                    drawBorder()
+                    drawAllTexts()
+                    drawTime()
+                    drawAllBlocks()
+                    
+                    # Draw next block hint
+                    drawNextBlock()
+                    drawBlock(old,jj,blocks[x][y][2])
+                    pygame.display.update()
+                    jj+=1
+
                 merge(x,y)
                 merge(x-1,y)
                 merge(x+1,y)
@@ -217,13 +247,24 @@ def merge(x, y):
         if leftLineY>=y:
             if blocks[x][y][0] == blocks[x-1][y][0]:
                 jj=blocks[x-1][y][1]
-                while jj < blocks[x][y][1]:
-                    drawBlock(blocks[x][y][0],jj,blocks[x][y][2])
-                    pygame.display.update()
-                    jj+=0.05
+                old=blocks[x][y][0]
+
                 blocks[x][y][0] *= 2
                 score += blocks[x][y][0]
                 dropAboveBlocks(x-1,y)
+                while jj < blocks[x][y][1]:
+                    # Draw
+                    drawBackground()
+                    drawBorder()
+                    drawAllTexts()
+                    drawTime()
+                    drawAllBlocks()
+                    
+                    # Draw next block hint
+                    drawNextBlock()
+                    drawBlock(old,jj,blocks[x][y][2])
+                    pygame.display.update()
+                    jj+=1
                 merge(x,y)
                 merge(x-1,y-1)
                 # somehting baout to check above
@@ -234,14 +275,24 @@ def merge(x, y):
         rightLineY = len(blocks[x+1])-1
         if rightLineY>=y:
             if blocks[x][y][0] == blocks[x+1][y][0]:
+                old=blocks[x][y][0]
                 jj=blocks[x+1][y][1]
-                while jj > blocks[x][y][1]:
-                    drawBlock(blocks[x][y][0],jj,blocks[x][y][2])
-                    pygame.display.update()
-                    jj-=0.05
                 blocks[x][y][0] *= 2
                 score += blocks[x][y][0]
                 dropAboveBlocks(x+1, y)
+                while jj > blocks[x][y][1]:
+                    # Draw
+                    drawBackground()
+                    drawBorder()
+                    drawAllTexts()
+                    drawTime()
+                    drawAllBlocks()
+                    
+                    # Draw next block hint
+                    drawNextBlock()
+                    drawBlock(old,jj,blocks[x][y][2])
+                    pygame.display.update()
+                    jj-=1
                 merge(x,y)
                 merge(x+1,y-1)
                 # something about to check above
@@ -251,13 +302,23 @@ def merge(x, y):
     if y>0:
         if blocks[x][y][0] == blocks[x][y-1][0]:
             jj=blocks[x][y][2]
-            while jj < blocks[x][y-1][2]:
-                drawBlock(blocks[x][y-1][0],blocks[x][y-1][1],jj)
-                pygame.display.update()
-                jj+=0.05
+            old=blocks[x][y][0]
             blocks[x][y-1][0] *= 2
             score += blocks[x][y-1][0]
             dropAboveBlocks(x,y)
+            while jj < blocks[x][y-1][2]:
+                # Draw
+                drawBackground()
+                drawBorder()
+                drawAllTexts()
+                drawTime()
+                drawAllBlocks()
+                
+                # Draw next block hint
+                drawNextBlock()
+                drawBlock(old,blocks[x][y-1][1],jj)
+                pygame.display.update()
+                jj+=1
             merge(x,y)
             merge(x,y-1)
 
