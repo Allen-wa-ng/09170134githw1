@@ -216,6 +216,11 @@ def merge(x, y):
         leftLineY = len(blocks[x-1])-1
         if leftLineY>=y:
             if blocks[x][y][0] == blocks[x-1][y][0]:
+                jj=blocks[x-1][y][1]
+                while jj < blocks[x][y][1]:
+                    drawBlock(blocks[x][y][0],jj,blocks[x][y][2])
+                    pygame.display.update()
+                    jj+=0.05
                 blocks[x][y][0] *= 2
                 score += blocks[x][y][0]
                 dropAboveBlocks(x-1,y)
@@ -229,11 +234,11 @@ def merge(x, y):
         rightLineY = len(blocks[x+1])-1
         if rightLineY>=y:
             if blocks[x][y][0] == blocks[x+1][y][0]:
-                jj=blocks[x][y][1]
-                while jj < blocks[x][y-1][2]:
-                    drawBlock(blocks[x][y-1][0],jj,blocks[x][y-1][2])
+                jj=blocks[x+1][y][1]
+                while jj > blocks[x][y][1]:
+                    drawBlock(blocks[x][y][0],jj,blocks[x][y][2])
                     pygame.display.update()
-                    jj+=0.05
+                    jj-=0.05
                 blocks[x][y][0] *= 2
                 score += blocks[x][y][0]
                 dropAboveBlocks(x+1, y)
