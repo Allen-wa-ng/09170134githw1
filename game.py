@@ -64,7 +64,8 @@ cooldown_clicked_hor = False
 cooldown_time_hor = 0
 # Horizontal superpower cooldown duration
 cool_down_hor = time.time() - cooldown_time_hor
-
+# delay
+delay=0.02
 # Vertical superpower cooldown clicked
 cooldown_clicked_vert = False
 # Vertical superpower cooldown time
@@ -134,7 +135,7 @@ def super_hor():
 # Given a line number and merge from top of the line
 def merge(x, y):
     global score
-
+    global delay
     if not x>=0 or not x<=5:
         return
     if not y>=0 or not len(blocks[x])-1>=y:
@@ -228,6 +229,11 @@ def merge(x, y):
         rightLineY = len(blocks[x+1])-1
         if rightLineY>=y:
             if blocks[x][y][0] == blocks[x+1][y][0]:
+                jj=blocks[x][y][1]
+                while jj < blocks[x][y-1][2]:
+                    drawBlock(blocks[x][y-1][0],jj,blocks[x][y-1][2])
+                    pygame.display.update()
+                    jj+=0.05
                 blocks[x][y][0] *= 2
                 score += blocks[x][y][0]
                 dropAboveBlocks(x+1, y)
@@ -239,11 +245,17 @@ def merge(x, y):
     # Check down
     if y>0:
         if blocks[x][y][0] == blocks[x][y-1][0]:
+            jj=blocks[x][y][2]
+            while jj < blocks[x][y-1][2]:
+                drawBlock(blocks[x][y-1][0],blocks[x][y-1][1],jj)
+                pygame.display.update()
+                jj+=0.05
             blocks[x][y-1][0] *= 2
             score += blocks[x][y-1][0]
             dropAboveBlocks(x,y)
             merge(x,y)
             merge(x,y-1)
+
             # something about to check above
             merge(x, len(blocks[x])-1)
             return
@@ -418,7 +430,7 @@ resetGame()
 
 # Main loop
 while True:
-    sleep(0.02)
+    sleep(delay)
     if not gameOver:
         if not pause:
             y_axis += 1
