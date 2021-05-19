@@ -35,7 +35,7 @@ pygame.mixer.music.load('let it go.ogg') #let it go.mp3 #mission.mp3
 pygame.mixer.music.set_volume(0.5) #set volume
 
 
-### Set global variable
+### Set global variables
 #If mute
 mute = False
 # If the game is pause
@@ -58,6 +58,15 @@ score = 0
 lastLoopPaused = False
 # highest score
 highest = 0
+# Horizontal superpower cooldown clicked
+cooldown_clicked_hor = False
+# Horizontal superpower cooldown time
+cooldown_time_hor = 0
+
+# Vertical superpower cooldown clicked
+cooldown_clicked_vert = False
+# Vertical superpower cooldown time
+cooldown_time_vert = 0
 
 # Initial the game (start or restart)
 def resetGame():
@@ -494,6 +503,10 @@ while True:
                 max_y_axis = 582-70*(len(blocks[track]))
                 blockAppend()
             elif mouseX in range(348,395) and mouseY in range(685,729):
+                if not cooldown_clicked_hor:
+                    cooldown_time_hor = time.time()
+                    cooldown_clicked_hor = True
+                cool_down_hor += time.time() - cooldown_time_hor
                 super_hor()
             elif mouseX in range(404,450) and mouseY in range(685,728):
                 super_vert()
