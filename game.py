@@ -517,4 +517,13 @@ while True:
                     cool_down_hor=0
                     cooldown_time_hor = time.time()
             elif mouseX in range(404,450) and mouseY in range(685,728):
-                super_vert()
+                if not cooldown_clicked_vert:
+                    cooldown_time_vert = time.time()
+                    super_vert()
+                    cool_down_vert = 0
+                    cooldown_clicked_vert = True
+                cool_down_vert = time.time() - cooldown_time_vert
+                if cool_down_vert>300:
+                    super_vert()
+                    cool_down_vert=0
+                    cooldown_time_vert = time.time()
