@@ -192,6 +192,7 @@ def merge(x, y):
                 old = blocks[x][y][0]
                 ii = blocks[x][y][2]
                 jj = blocks[x+1][y][1]
+                print("Gamma",ii," ",jj)
 
                 blocks[x][y-1][0] *= 4
                 score += blocks[x][y-1][0]
@@ -207,7 +208,6 @@ def merge(x, y):
                     
                     # Draw next block hint
                     drawNextBlock()
-                    print("Gamma")
                     drawBlock(old,blocks[x][y][1],ii)
                     drawBlock(old,jj,blocks[x][y][2])
                     pygame.display.update()
