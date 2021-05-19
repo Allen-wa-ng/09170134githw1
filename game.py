@@ -16,10 +16,10 @@ random.seed()
 white = (255,255,255)
 black = (0,0,0)
 
-# The color of "next block" hint
+### The color of "next block" hint
 nextBlockBorderColor = (255,200,200)
 
-# The color of the block that every represent color for exponential of two
+### The color of the block that every represent color for exponential of two
 colorList = [(255,  0,  0), (  0,255,  0), (204,153,255), (209,237,  0), (209,237,240), 
              (209, 40,240), (254,239,222), (  0,239,222), (255,255, 80), ( 51,102,255), 
              (255,204,164), (153,255,153), (194,194,214)]
@@ -468,8 +468,6 @@ while True:
                 if mute:
                     pygame.mixer.music.stop()
                 else:
-                    pygame.mixer.music.load('let it go.ogg') #let it go.mp3 #mission.mp3
-                    pygame.mixer.music.set_volume(0.5) #set volume
                     pygame.mixer.music.play(-1)
                 
 
