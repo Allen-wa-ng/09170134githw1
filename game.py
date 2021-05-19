@@ -171,6 +171,7 @@ def merge(x, y):
                     drawBlock(old,blocks[x][y][1],ii)
                     drawBlock(old,jj,blocks[x][y][2]) 
                     drawBlock(old,kk,blocks[x][y][2]) 
+                    pygame.display.update()
                     ii-=1
                     jj+=1
                     kk-=1
@@ -196,7 +197,7 @@ def merge(x, y):
                 score += blocks[x][y-1][0]
                 dropAboveBlocks(x,y)
                 dropAboveBlocks(x+1, y)
-                while ii < blocks[x][y-1][2] and jj > blocks[x][y][1]:
+                while ii > blocks[x][y-1][2] and jj > blocks[x][y][1]:
                     # Draw
                     drawBackground()
                     drawBorder()
@@ -209,6 +210,7 @@ def merge(x, y):
                     print("Gamma")
                     drawBlock(old,blocks[x][y][1],ii)
                     drawBlock(old,jj,blocks[x][y][2])
+                    pygame.display.update()
                     ii-=1
                     jj-=1
                 merge(x,y)
