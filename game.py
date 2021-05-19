@@ -62,12 +62,15 @@ highest = 0
 cooldown_clicked_hor = False
 # Horizontal superpower cooldown time
 cooldown_time_hor = 0
+# Horizontal superpower cooldown duration
+cool_down_hor = time.time() - cooldown_time_hor
 
 # Vertical superpower cooldown clicked
 cooldown_clicked_vert = False
 # Vertical superpower cooldown time
 cooldown_time_vert = 0
-
+# Vertical superpower cooldown duration
+cool_down_vert = 0
 # Initial the game (start or restart)
 def resetGame():
     random.seed()
@@ -352,7 +355,7 @@ def drawBorder():
     image = pygame.image.load("vertical-2.png")
     screen.blit(image, (404, 681))
 
-# Draw all text
+# Draw all text                cool_down_hor = time.time() - cooldown_time_hor
 def drawAllTexts():
     drawText('Drop The Number!', 'arial.ttf',32, (255,255,80), (110,35))
     drawText('Next Block ►','arial.ttf',17,white,(57,88))
@@ -505,8 +508,13 @@ while True:
             elif mouseX in range(348,395) and mouseY in range(685,729):
                 if not cooldown_clicked_hor:
                     cooldown_time_hor = time.time()
+                    super_hor()
+                    cool_down_hor = 0
                     cooldown_clicked_hor = True
-                cool_down_hor += time.time() - cooldown_time_hor
-                super_hor()
+                cool_down_hor = time.time() - cooldown_time_hor
+                if cool_down_hor>300:
+                    super_hor()
+                    cool_down_hor=0
+                    cooldown_time_hor = time.time()
             elif mouseX in range(404,450) and mouseY in range(685,728):
                 super_vert()
