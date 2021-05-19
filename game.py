@@ -16,10 +16,10 @@ random.seed()
 white = (255,255,255)
 black = (0,0,0)
 
-### The color of "next block" hint
+# The color of "next block" hint
 nextBlockBorderColor = (255,200,200)
 
-### The color of the block that every represent color for exponential of two
+# The color of the block that every represent color for exponential of two
 colorList = [(255,  0,  0), (  0,255,  0), (204,153,255), (209,237,  0), (209,237,240), 
              (209, 40,240), (254,239,222), (  0,239,222), (255,255, 80), ( 51,102,255), 
              (255,204,164), (153,255,153), (194,194,214)]
@@ -34,7 +34,8 @@ pygame.display.set_caption('2048 V.2') #caption
 pygame.mixer.music.load('let it go.ogg') #let it go.mp3 #mission.mp3
 pygame.mixer.music.set_volume(0.5) #set volume
 
-### Set global variable
+
+### Set global variables
 #If mute
 mute = False
 # If the game is pause
@@ -57,7 +58,19 @@ score = 0
 lastLoopPaused = False
 # highest score
 highest = 0
+# Horizontal superpower cooldown clicked
+cooldown_clicked_hor = False
+# Horizontal superpower cooldown time
+cooldown_time_hor = 0
+# Horizontal superpower cooldown duration
+cool_down_hor = time.time() - cooldown_time_hor
 
+# Vertical superpower cooldown clicked
+cooldown_clicked_vert = False
+# Vertical superpower cooldown time
+cooldown_time_vert = 0
+# Vertical superpower cooldown duration
+cool_down_vert = 0
 # Initial the game (start or restart)
 def resetGame():
     random.seed()
@@ -342,7 +355,7 @@ def drawBorder():
     image = pygame.image.load("vertical-2.png")
     screen.blit(image, (404, 681))
 
-# Draw all text
+# Draw all text                cool_down_hor = time.time() - cooldown_time_hor
 def drawAllTexts():
     drawText('Drop The Number!', 'arial.ttf',32, (255,255,80), (110,35))
     drawText('Next Block ►','arial.ttf',17,white,(57,88))
@@ -467,6 +480,8 @@ while True:
                 if mute:
                     pygame.mixer.music.stop()
                 else:
+                    pygame.mixer.music.load('let it go.ogg') #let it go.mp3 #mission.mp3
+                    pygame.mixer.music.set_volume(0.5) #set volume
                     pygame.mixer.music.play(-1)
                 
 
@@ -491,6 +506,24 @@ while True:
                 max_y_axis = 582-70*(len(blocks[track]))
                 blockAppend()
             elif mouseX in range(348,395) and mouseY in range(685,729):
-                super_hor()
+                if not cooldown_clicked_hor:
+                    cooldown_time_hor = time.time()
+                    super_hor()
+                    cool_down_hor = 0
+                    cooldown_clicked_hor = True
+                cool_down_hor = time.time() - cooldown_time_hor
+                if cool_down_hor>300:
+                    super_hor()
+                    cool_down_hor=0
+                    cooldown_time_hor = time.time()
             elif mouseX in range(404,450) and mouseY in range(685,728):
-                super_vert()
+                if not cooldown_clicked_vert:
+                    cooldown_time_vert = time.time()
+                    super_vert()
+                    cool_down_vert = 0
+                    cooldown_clicked_vert = True
+                cool_down_vert = time.time() - cooldown_time_vert
+                if cool_down_vert>300:
+                    super_vert()
+                    cool_down_vert=0
+                    cooldown_time_vert = time.time()
