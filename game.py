@@ -592,6 +592,13 @@ def drawGameOverScreen():
     drawText('Quit','arial.ttf',25,black,(225,435))
     pygame.display.update()
 
+# Pause if it is not gameOver yet
+def tryToPause():
+    global pause
+    global gameOver
+    if not gameOver:
+        pause = not pause
+
 resetGame()
 
 # Main loop
