@@ -34,7 +34,6 @@ pygame.display.set_caption('2048 V.2') #caption
 pygame.mixer.music.load('let it go.ogg') #let it go.mp3 #mission.mp3
 pygame.mixer.music.set_volume(0.5) #set volume
 
-
 ### Set global variables
 # check whether to cross during the pause
 blocked_hor = False
@@ -440,9 +439,9 @@ def getNewNextBlock():
     if score > 40000:
         nextNumber = pow(2, random.randint(4,10))
     elif score > 15000:
-        nextNumber = pow(2, random.randint(4,7))
+        nextNumber = pow(2, random.randint(1,7))
     else:
-        nextNumber = pow(2,random.randint(1,5))
+        nextNumber = pow(2,random.randint(1,6))
     x_axis=75+70*track
     
 # Create a stable block
@@ -493,8 +492,8 @@ def drawBlock(value,x,y):
         a=pygame.draw.rect(screen, colorList[12], (x,y,68,68), 0)
 
     b=pygame.draw.rect(screen,black, (x,y,68,68), 4)
-    font=pygame.font.Font('arial.ttf',30)
-    textX =x+26-len(str(value))*5
+    font=pygame.font.Font('arial.ttf',27)
+    textX =x+24-len(str(value))*5
     if value <= 8192:
         text=font.render(str(value),True,black,colorList[int(getBaseLog(2,value))-1])
     else:
@@ -587,7 +586,7 @@ def drawTime():
 # Draw next block hint
 def drawNextBlock():
     pygame.draw.rect(screen, colorList[int(getBaseLog(2,nextNumber))-1], (175,81,38,38), 0)
-    drawText(str(nextNumber),'arial.ttf',20,black,(168+25-len(str(nextNumber))*5,89))
+    drawText(str(nextNumber),'arial.ttf',18,black,(168+25-len(str(nextNumber))*5,89))
     global blocked_hor
     global blocked_vert
     cdh = time.time() - cooldown_time_hor
