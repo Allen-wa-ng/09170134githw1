@@ -584,6 +584,10 @@ def drawTime():
 def drawNextBlock():
     pygame.draw.rect(screen, colorList[int(getBaseLog(2,nextNumber))-1], (175,81,38,38), 0)
     drawText(str(nextNumber),'arial.ttf',20,black,(168+25-len(str(nextNumber))*5,89))
+    #Cool down hor X        
+    if cool_down_hor<5:
+        pygame.draw.rect(screen, white, (350,685,45,45), 10)
+        drawText('X','arial.ttf',60,black,(350,677))
 
 # Draw game over screen
 def drawGameOverScreen():
@@ -657,10 +661,6 @@ while True:
             image = pygame.image.load("ball-1.png")
             screen.blit(image, (142, 294))
         
-        #Cool down hor X        
-        if cool_down_hor<5:
-            pygame.draw.rect(screen, white, (350,685,45,45), 10)
-            drawText('X','arial.ttf',60,black,(350,677))
         # Flush draw buffer
         pygame.display.update()
         
