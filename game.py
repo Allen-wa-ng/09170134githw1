@@ -586,11 +586,17 @@ def drawNextBlock():
     drawText(str(nextNumber),'arial.ttf',20,black,(168+25-len(str(nextNumber))*5,89))
     #Cool down hor X        
     if cool_down_hor<5 and cool_down_hor != 0:
-        pygame.draw.rect(screen, white, (350,685,45,45), 10)
-        drawText('X','arial.ttf',60,black,(350,677))
+        pygame.draw.rect(screen, black, (352,685,45,45), 5)
+        drawText('X','arial.ttf',60,black,(352,675))
     else:
         image = pygame.image.load("fire-4.png")
         screen.blit(image, (343, 678))
+    if cool_down_vert<5 and cool_down_vert != 0:
+        pygame.draw.rect(screen, black, (403,685,45,45), 5)
+        drawText('X','arial.ttf',60,black,(405,675))
+    else:
+        image = pygame.image.load("vertical-2.png")
+        screen.blit(image, (404, 681))
 
 # Draw game over screen
 def drawGameOverScreen():
