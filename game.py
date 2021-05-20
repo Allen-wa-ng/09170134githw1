@@ -36,6 +36,10 @@ pygame.mixer.music.set_volume(0.5) #set volume
 
 
 ### Set global variables
+# check whether to cross during the pause
+blocked_hor = False
+blocked_vert = False
+# Cooldown time (s)
 cooldown_period=10
 #If mute
 mute = False
@@ -528,13 +532,8 @@ def drawBorder():
     else:
         image = pygame.image.load("mute-1.png")
         screen.blit(image, (402, 83))
-    screen.blit(image, (402, 83))
-    image = pygame.image.load("fire-4.png")
-    screen.blit(image, (343, 678))
-    image = pygame.image.load("vertical-2.png")
-    screen.blit(image, (404, 681))
 
-# Draw all text                cool_down_hor = time.time() - cooldown_time_hor
+# Draw all text
 def drawAllTexts():
     drawText('Drop The Number!', 'arial.ttf',32, (255,255,80), (110,35))
     drawText('Next Block ►','arial.ttf',17,white,(57,88))
@@ -550,6 +549,10 @@ def drawAllBlocks():
             for block in lineOfBlocksY:
                 if not gameOver:
                     drawBlock(block[0], block[1], block[2])
+    image = pygame.image.load("vertical-2.png")
+    screen.blit(image, (404, 681))
+    image = pygame.image.load("fire-4.png")
+    screen.blit(image, (343, 678))
     
 # Draw time
 def drawTime():
@@ -585,20 +588,26 @@ def drawTime():
 def drawNextBlock():
     pygame.draw.rect(screen, colorList[int(getBaseLog(2,nextNumber))-1], (175,81,38,38), 0)
     drawText(str(nextNumber),'arial.ttf',20,black,(168+25-len(str(nextNumber))*5,89))
+    global blocked_hor
+    global blocked_vert
     cdh = time.time() - cooldown_time_hor
     cdv = time.time() - cooldown_time_vert
     #Cool down hor X        
     if cdh<cooldown_period and cdh!=0:
+        blocked_hor = True
         pygame.draw.rect(screen, black, (352,685,45,45), 5)
         drawText('X','arial.ttf',60,black,(352,675))
     elif not pause:
+        blocked_hor = False
         image = pygame.image.load("fire-4.png")
         screen.blit(image, (343, 678))
 
     if cdv<cooldown_period and cdv!=0:
+        blocked_vert = True
         pygame.draw.rect(screen, black, (403,685,45,45), 5)
         drawText('X','arial.ttf',60,black,(405,675))
     elif not pause:
+        blocked_vert = False
         image = pygame.image.load("vertical-2.png")
         screen.blit(image, (404, 681))
 
@@ -669,11 +678,19 @@ while True:
 
         # Draw pop pause button
         if pause:
+
             image = pygame.image.load("pause.png")
             screen.blit(image, (140, 290))
             image = pygame.image.load("ball-1.png")
             screen.blit(image, (142, 294))
-        
+            #print(blocked_hor, " ",blocked_vert)
+            if blocked_hor:
+                pygame.draw.rect(screen, black, (352,685,45,45), 5)
+                drawText('X','arial.ttf',60,black,(352,675))
+            if blocked_vert:
+                pygame.draw.rect(screen, black, (403,685,45,45), 5)
+                drawText('X','arial.ttf',60,black,(405,675))
+
         # Flush draw buffer
         pygame.display.update()
         
@@ -729,7 +746,7 @@ while True:
                     super_vert()
         # Mouse event
         if event.type==pygame.MOUSEBUTTONDOWN:
-            print(pygame.mouse.get_pos())
+            #print(pygame.mouse.get_pos())
             mouseX = pygame.mouse.get_pos()[0]
             mouseY = pygame.mouse.get_pos()[1]
 
