@@ -61,7 +61,7 @@ highest = 0
 # delay
 delay=0.02
 # Merging Speed
-mergingSpeed = 3
+mergingSpeed = 4
 # The last time which horizontal superpower clicked
 cooldown_time_hor = None
 # Horizontal superpower cooldown duration
@@ -603,7 +603,9 @@ resetGame()
 
 # Main loop
 while True:
+    #delay time
     sleep(delay)
+
     if not gameOver:
         if not pause:
             y_axis += 1
@@ -623,6 +625,7 @@ while True:
                         hs.write(str(highest))
                 with open('score.txt', 'r') as hs:
                     highest = int(hs.read())
+
         # Draw
         drawBackground()
         drawBorder()
@@ -708,6 +711,12 @@ while True:
                     cool_down_hor=0
                     cooldown_time_hor = time.time()
                     super_hor()
+            #Cool down hor X        
+            if cool_down_hor<5:
+                pygame.draw.rect(screen, white, (350,685,45,45), 10)
+                drawText('X','arial.ttf',60,black,(350,677))
+                pygame.display.update()
+                
             # Vertical superpower
             elif mouseX in range(404,450) and mouseY in range(685,728):
                 if cooldown_time_vert==None:
