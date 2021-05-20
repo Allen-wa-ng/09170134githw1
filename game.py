@@ -65,7 +65,7 @@ cooldown_time_hor = 0
 # Horizontal superpower cooldown duration
 cool_down_hor = time.time() - cooldown_time_hor
 # delay
-delay=0.005
+delay=0.02
 # Vertical superpower cooldown clicked
 cooldown_clicked_vert = False
 # Vertical superpower cooldown time
@@ -73,7 +73,7 @@ cooldown_time_vert = 0
 # Vertical superpower cooldown duration
 cool_down_vert = 0
 # Merging Speed
-mergingSpeed = 2
+mergingSpeed = 3
 # Initial the game (start or restart)
 def resetGame():
     random.seed()
