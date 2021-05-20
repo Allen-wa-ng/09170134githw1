@@ -649,6 +649,7 @@ while True:
         # Draw dropping block
         drawBlock(currentNumber,x_axis,y_axis)
 
+
         # Draw pop pause button
         if pause:
             image = pygame.image.load("pause.png")
@@ -656,6 +657,10 @@ while True:
             image = pygame.image.load("ball-1.png")
             screen.blit(image, (142, 294))
         
+        #Cool down hor X        
+        if cool_down_hor<5:
+            pygame.draw.rect(screen, white, (350,685,45,45), 10)
+            drawText('X','arial.ttf',60,black,(350,677))
         # Flush draw buffer
         pygame.display.update()
         
@@ -721,11 +726,6 @@ while True:
                     cool_down_hor=0
                     cooldown_time_hor = time.time()
                     super_hor()
-            #Cool down hor X        
-            if cool_down_hor<5:
-                pygame.draw.rect(screen, white, (350,685,45,45), 10)
-                drawText('X','arial.ttf',60,black,(350,677))
-                pygame.display.update()
         
             # Vertical superpower
             elif mouseX in range(404,450) and mouseY in range(685,728):
