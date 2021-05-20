@@ -591,6 +591,7 @@ def drawNextBlock():
     else:
         image = pygame.image.load("fire-4.png")
         screen.blit(image, (343, 678))
+
     if cool_down_vert<5 and cool_down_vert != 0:
         pygame.draw.rect(screen, black, (403,685,45,45), 5)
         drawText('X','arial.ttf',60,black,(405,675))
@@ -684,6 +685,16 @@ while True:
             quit()
         # Keyboard event
         if event.type==pygame.KEYDOWN:
+            if event.key==pygame.K_LEFT:
+                if track<5 and track>0:
+                    track-=1
+                    x_axis-=70
+            if event.key==pygame.K_RIGHT:
+                if track<4:
+                    track+=1
+                    x_axis+=70
+            if event.key==pygame.K_DOWN:
+                blockAppend()
             if event.key==pygame.K_SPACE:
                 tryToPause()
             if event.key==pygame.K_RETURN:
