@@ -561,7 +561,17 @@ def drawTime():
         if pause:
             startTimeOfPause = time.time()
         else:
-            startTime += (time.time()-startTimeOfPause)
+            pauseDuration = time.time()-startTimeOfPause
+            # Stop horizontal super skill cooldown when puase
+            global cooldown_time_hor
+            if cooldown_time_hor != None:
+                cooldown_time_hor += pauseDuration
+            # Stop vertical super skill cooldown when puase
+            global cooldown_time_vert
+            if cooldown_time_vert != None:
+                cooldown_time_vert += pauseDuration
+            # Change start time of the game which use to count the timer
+            startTime += pauseDuration
     lastLoopPaused = pause
     if pause:
         duration = stopTimeText
@@ -704,7 +714,7 @@ while True:
                     cooldown_time_hor = time.time()
                     super_hor()
                 cool_down_hor = time.time() - cooldown_time_hor
-                if cool_down_hor>5:
+                if cool_down_hor>300:
                     cool_down_hor=0
                     cooldown_time_hor = time.time()
                     super_hor()
@@ -714,7 +724,7 @@ while True:
                     cooldown_time_vert = time.time()
                     super_vert()
                 cool_down_vert = time.time() - cooldown_time_vert
-                if cool_down_vert>5:
+                if cool_down_vert>300:
                     cool_down_vert=0
                     cooldown_time_vert = time.time()
                     super_vert()
