@@ -584,6 +584,10 @@ def drawTime():
 def drawNextBlock():
     pygame.draw.rect(screen, colorList[int(getBaseLog(2,nextNumber))-1], (175,81,38,38), 0)
     drawText(str(nextNumber),'arial.ttf',20,black,(168+25-len(str(nextNumber))*5,89))
+    
+    cool_down_vert = time.time() - cooldown_time_vert
+    cool_down_hor = time.time() - cooldown_time_hor
+
     #Cool down hor X        
     if cool_down_hor<5 and cool_down_hor!=0:
         pygame.draw.rect(screen, black, (352,685,45,45), 5)
@@ -592,7 +596,7 @@ def drawNextBlock():
         image = pygame.image.load("fire-4.png")
         screen.blit(image, (343, 678))
 
-    if cool_down_vert<5 and cool_down_hor!=0:
+    if cool_down_vert<5 and cool_down_vert!=0:
         pygame.draw.rect(screen, black, (403,685,45,45), 5)
         drawText('X','arial.ttf',60,black,(405,675))
     else:
@@ -774,7 +778,6 @@ while True:
                 if cooldown_time_vert==0:
                     cooldown_time_vert = time.time()
                     super_vert()
-                cool_down_vert = time.time() - cooldown_time_vert
                 if cool_down_vert>5:
                     cool_down_vert=0
                     cooldown_time_vert = time.time()
