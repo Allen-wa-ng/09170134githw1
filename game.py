@@ -632,9 +632,17 @@ while True:
         
     # Event handling
     for event in pygame.event.get():
+        # Quit event
         if event.type==pygame.QUIT:
             pygame.quit()
             quit()
+        # Keyboard event
+        if event.type==pygame.KEYDOWN:
+            if event.key==pygame.K_SPACE:
+                tryToPause()
+            if event.key==pygame.K_RETURN:
+                tryToPause()
+        # Mouse event
         if event.type==pygame.MOUSEBUTTONDOWN:
             print(pygame.mouse.get_pos())
             mouseX = pygame.mouse.get_pos()[0]
