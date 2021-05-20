@@ -97,9 +97,9 @@ def resetGame():
     global nextNumber
     nextNumber = pow(2, random.randint(1,5))
     global cooldown_time_hor
-    cooldown_time_hor = None
+    cooldown_time_hor = 0
     global cooldown_time_vert
-    cooldown_time_vert = None
+    cooldown_time_vert = 0
     
     # Play already loaded background music, -1 => infinite replace
     pygame.mixer.music.play(-1)
