@@ -36,6 +36,7 @@ pygame.mixer.music.set_volume(0.5) #set volume
 
 
 ### Set global variables
+cooldown_period=10
 #If mute
 mute = False
 # If the game is pause
@@ -584,22 +585,20 @@ def drawTime():
 def drawNextBlock():
     pygame.draw.rect(screen, colorList[int(getBaseLog(2,nextNumber))-1], (175,81,38,38), 0)
     drawText(str(nextNumber),'arial.ttf',20,black,(168+25-len(str(nextNumber))*5,89))
-    
-    cool_down_vert = time.time() - cooldown_time_vert
-    cool_down_hor = time.time() - cooldown_time_hor
-
+    cdh = time.time() - cooldown_time_hor
+    cdv = time.time() - cooldown_time_vert
     #Cool down hor X        
-    if cool_down_hor<5 and cool_down_hor!=0:
+    if cdh<cooldown_period and cdh!=0:
         pygame.draw.rect(screen, black, (352,685,45,45), 5)
         drawText('X','arial.ttf',60,black,(352,675))
-    else:
+    elif not pause:
         image = pygame.image.load("fire-4.png")
         screen.blit(image, (343, 678))
 
-    if cool_down_vert<5 and cool_down_vert!=0:
+    if cdv<cooldown_period and cdv!=0:
         pygame.draw.rect(screen, black, (403,685,45,45), 5)
         drawText('X','arial.ttf',60,black,(405,675))
-    else:
+    elif not pause:
         image = pygame.image.load("vertical-2.png")
         screen.blit(image, (404, 681))
 
@@ -714,7 +713,7 @@ while True:
                     cooldown_time_hor = time.time()
                     super_hor()
                 cool_down_hor = time.time() - cooldown_time_hor
-                if cool_down_hor>300:
+                if cool_down_hor>cooldown_period:
                     cool_down_hor=0
                     cooldown_time_hor = time.time()
                     super_hor()
@@ -724,7 +723,7 @@ while True:
                     cooldown_time_vert = time.time()
                     super_vert()
                 cool_down_vert = time.time() - cooldown_time_vert
-                if cool_down_vert>300:
+                if cool_down_vert>cooldown_period:
                     cool_down_vert=0
                     cooldown_time_vert = time.time()
                     super_vert()
@@ -769,7 +768,7 @@ while True:
                     cooldown_time_hor = time.time()
                     super_hor()
                 cool_down_hor = time.time() - cooldown_time_hor
-                if cool_down_hor>5:
+                if cool_down_hor>cooldown_period:
                     cool_down_hor=0
                     cooldown_time_hor = time.time()
                     super_hor()
@@ -778,7 +777,8 @@ while True:
                 if cooldown_time_vert==0:
                     cooldown_time_vert = time.time()
                     super_vert()
-                if cool_down_vert>5:
+                cool_down_vert = time.time() - cooldown_time_vert
+                if cool_down_vert>cooldown_period:
                     cool_down_vert=0
                     cooldown_time_vert = time.time()
                     super_vert()
