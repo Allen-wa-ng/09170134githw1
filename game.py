@@ -72,6 +72,8 @@ cooldown_clicked_vert = False
 cooldown_time_vert = 0
 # Vertical superpower cooldown duration
 cool_down_vert = 0
+# Merging Speed
+mergingSpeed = 2
 # Initial the game (start or restart)
 def resetGame():
     random.seed()
@@ -171,8 +173,8 @@ def merge(x, y):
                     drawBlock(old,kk,blocks[x][y][2]) 
                     pygame.display.update()
                     
-                    jj+=mergingSpeed1
-                    kk-=mergingSpeed1
+                    jj+=mergingSpeed
+                    kk-=mergingSpeed
                 dropAboveBlocks(x,y)
                 while ii < blocks[x][y-1][2]:
                    # Draw
@@ -187,7 +189,7 @@ def merge(x, y):
                     
                     drawBlock(old,blocks[x][y-1][1],ii)
                     pygame.display.update()
-                    ii+=mergingSpeed1
+                    ii+=mergingSpeed
                 merge(x,y)
                 merge(x,y-1)
                 merge(x-1, y)
@@ -222,7 +224,7 @@ def merge(x, y):
                     drawNextBlock()
                     drawBlock(old,jj,blocks[x][y][2])
                     pygame.display.update()
-                    jj-=mergingSpeed1
+                    jj-=mergingSpeed
                 dropAboveBlocks(x,y)
                 while ii < blocks[x][y-1][2]:
                     # Draw
@@ -236,7 +238,7 @@ def merge(x, y):
                     drawNextBlock()
                     drawBlock(old,blocks[x][y-1][1],ii)
                     pygame.display.update()
-                    ii+=mergingSpeed1
+                    ii+=mergingSpeed
                 merge(x,y)
                 merge(x,y-1)
                 merge(x+1,y)
@@ -268,7 +270,7 @@ def merge(x, y):
                     
                     drawBlock(old,jj,blocks[x][y][2])
                     pygame.display.update()
-                    jj+=mergingSpeed1
+                    jj+=mergingSpeed
                 dropAboveBlocks(x,y)
                 while ii < blocks[x][y-1][2]:
                     # Draw
@@ -281,7 +283,7 @@ def merge(x, y):
                     drawNextBlock()
                     drawBlock(old,blocks[x][y-1][1],ii)
                     pygame.display.update()
-                    ii+=mergingSpeed1 
+                    ii+=mergingSpeed 
                 merge(x,y)
                 merge(x,y-1)
                 merge(x-1,y)
@@ -316,8 +318,8 @@ def merge(x, y):
                     drawBlock(old,ii,blocks[x][y][2])
                     drawBlock(old,jj,blocks[x][y][2])
                     pygame.display.update()
-                    ii-=mergingSpeed1
-                    jj+=mergingSpeed1
+                    ii-=mergingSpeed
+                    jj+=mergingSpeed
 
                 merge(x,y)
                 merge(x-1,y)
