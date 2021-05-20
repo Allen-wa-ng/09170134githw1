@@ -30,10 +30,6 @@ background = pygame.image.load('jaguar.jpg') #screen background
 background = pygame.transform.scale(background, (500, 750)) #screen background
 pygame.display.set_caption('2048 V.2') #caption
 
-### Background music
-pygame.mixer.music.load('let it go.ogg') #let it go.mp3 #mission.mp3
-pygame.mixer.music.set_volume(0.5) #set volume
-
 
 ### Set global variables
 #If mute
@@ -58,19 +54,22 @@ score = 0
 lastLoopPaused = False
 # highest score
 highest = 0
+# Horizontal superpower cooldown clicked
+cooldown_clicked_hor = False
+# Horizontal superpower cooldown time
+cooldown_time_hor = 0
+# Horizontal superpower cooldown duration
+cool_down_hor = time.time() - cooldown_time_hor
 # delay
 delay=0.02
-# Merging Speed
-mergingSpeed = 3
-# The last time which horizontal superpower clicked
-cooldown_time_hor = None
-# Horizontal superpower cooldown duration
-cool_down_hor = 0
-# The last time which vertical superpower clicked
-cooldown_time_vert = None
+# Vertical superpower cooldown clicked
+cooldown_clicked_vert = False
+# Vertical superpower cooldown time
+cooldown_time_vert = 0
 # Vertical superpower cooldown duration
 cool_down_vert = 0
-
+# Merging Speed
+mergingSpeed = 3
 # Initial the game (start or restart)
 def resetGame():
     random.seed()
@@ -84,25 +83,13 @@ def resetGame():
         blocks.append([])
     global gameOver
     gameOver = False
-    global lastLoopPaused
     lastLoopPaused = False
-    global track
     track = random.randint(1,5)-1
-    global x_axis
     x_axis = 75+70*track
-    global y_axis
     y_axis = 226
-    global currentNumber
     currentNumber = pow(2,random.randint(1,5))
-    global nextNumber
     nextNumber = pow(2, random.randint(1,5))
-    global cooldown_time_hor
-    cooldown_time_hor = None
-    global cooldown_time_vert
-    cooldown_time_vert = None
     
-    # Play already loaded background music, -1 => infinite replace
-    pygame.mixer.music.play(-1)
 
 # get the maximum tracks with the most elements
 def getMaxTrack():
@@ -520,13 +507,8 @@ def drawBorder():
     pygame.draw.rect(screen, white, (105,685,235,45), 0)
     for i in range(5):
         pygame.draw.lines(screen, white, True, [(75+i*70,150),(75+i*70,650)], 5)
-    # Draw mute icon
-    if mute:
-        image = pygame.image.load("mute-2.png")
-        screen.blit(image, (402, 83))
-    else:
-        image = pygame.image.load("mute-1.png")
-        screen.blit(image, (402, 83))
+    #insert image
+    image = pygame.image.load("mute-2.png")
     screen.blit(image, (402, 83))
     image = pygame.image.load("fire-4.png")
     screen.blit(image, (343, 678))
@@ -592,13 +574,6 @@ def drawGameOverScreen():
     drawText('Quit','arial.ttf',25,black,(225,435))
     pygame.display.update()
 
-# Pause if it is not gameOver yet
-def tryToPause():
-    global pause
-    global gameOver
-    if not gameOver:
-        pause = not pause
-
 resetGame()
 
 # Main loop
@@ -612,7 +587,6 @@ while True:
         # Check if it is game over
         if y_axis > max_y_axis:
             if not blockAppend():
-                pygame.mixer.music.stop()
                 gameOver = True
                 with open('score.txt', 'r') as hs:
                     highest = int(hs.read())
@@ -651,31 +625,14 @@ while True:
         
     # Event handling
     for event in pygame.event.get():
-        # Quit event
         if event.type==pygame.QUIT:
             pygame.quit()
             quit()
-        # Keyboard event
-        if event.type==pygame.KEYDOWN:
-            if event.key==pygame.K_SPACE:
-                tryToPause()
-            if event.key==pygame.K_RETURN:
-                tryToPause()
-        # Mouse event
         if event.type==pygame.MOUSEBUTTONDOWN:
             print(pygame.mouse.get_pos())
             mouseX = pygame.mouse.get_pos()[0]
             mouseY = pygame.mouse.get_pos()[1]
 
-            #Stop play the music
-            if mouseX in range(402,437) and mouseY in range(83,118):
-                mute = not mute
-                if mute:
-                    pygame.mixer.music.stop()
-                else:
-                    pygame.mixer.music.load('let it go.ogg') #let it go.mp3 #mission.mp3
-                    pygame.mixer.music.set_volume(0.5) #set volume
-                    pygame.mixer.music.play(-1)
                 
 
             # Restart button
@@ -698,23 +655,25 @@ while True:
                 x_axis = 76+70*track
                 max_y_axis = 582-70*(len(blocks[track]))
                 blockAppend()
-            # Horizontal superpower
             elif mouseX in range(348,395) and mouseY in range(685,729):
-                if cooldown_time_hor==None:
+                if not cooldown_clicked_hor:
                     cooldown_time_hor = time.time()
                     super_hor()
+                    cool_down_hor = 0
+                    cooldown_clicked_hor = True
                 cool_down_hor = time.time() - cooldown_time_hor
-                if cool_down_hor>5:
+                if cool_down_hor>300:
+                    super_hor()
                     cool_down_hor=0
                     cooldown_time_hor = time.time()
-                    super_hor()
-            # Vertical superpower
             elif mouseX in range(404,450) and mouseY in range(685,728):
-                if cooldown_time_vert==None:
+                if not cooldown_clicked_vert:
                     cooldown_time_vert = time.time()
                     super_vert()
+                    cool_down_vert = 0
+                    cooldown_clicked_vert = True
                 cool_down_vert = time.time() - cooldown_time_vert
-                if cool_down_vert>5:
+                if cool_down_vert>300:
+                    super_vert()
                     cool_down_vert=0
                     cooldown_time_vert = time.time()
-                    super_vert()
