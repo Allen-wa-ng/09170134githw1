@@ -726,7 +726,7 @@ while True:
                 pygame.draw.rect(screen, white, (350,685,45,45), 10)
                 drawText('X','arial.ttf',60,black,(350,677))
                 pygame.display.update()
-                
+        
             # Vertical superpower
             elif mouseX in range(404,450) and mouseY in range(685,728):
                 if cooldown_time_vert==None:
