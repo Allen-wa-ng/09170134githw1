@@ -564,11 +564,11 @@ def drawTime():
             pauseDuration = time.time()-startTimeOfPause
             # Stop horizontal super skill cooldown when puase
             global cooldown_time_hor
-            if cooldown_time_hor != None:
+            if cooldown_time_hor != 0:
                 cooldown_time_hor += pauseDuration
             # Stop vertical super skill cooldown when puase
             global cooldown_time_vert
-            if cooldown_time_vert != None:
+            if cooldown_time_vert != 0:
                 cooldown_time_vert += pauseDuration
             # Change start time of the game which use to count the timer
             startTime += pauseDuration
@@ -585,14 +585,14 @@ def drawNextBlock():
     pygame.draw.rect(screen, colorList[int(getBaseLog(2,nextNumber))-1], (175,81,38,38), 0)
     drawText(str(nextNumber),'arial.ttf',20,black,(168+25-len(str(nextNumber))*5,89))
     #Cool down hor X        
-    if cool_down_hor<5 and cool_down_hor != 0:
+    if cool_down_hor<5 and cool_down_hor!=0:
         pygame.draw.rect(screen, black, (352,685,45,45), 5)
         drawText('X','arial.ttf',60,black,(352,675))
     else:
         image = pygame.image.load("fire-4.png")
         screen.blit(image, (343, 678))
 
-    if cool_down_vert<5 and cool_down_vert != 0:
+    if cool_down_vert<5 and cool_down_hor!=0:
         pygame.draw.rect(screen, black, (403,685,45,45), 5)
         drawText('X','arial.ttf',60,black,(405,675))
     else:
@@ -699,6 +699,31 @@ while True:
                 tryToPause()
             if event.key==pygame.K_RETURN:
                 tryToPause()
+            if event.key==pygame.K_m:
+                mute = not mute
+                if mute:
+                    pygame.mixer.music.pause()
+                else:
+                    pygame.mixer.music.unpause()
+            if event.key==pygame.K_h:
+                if cooldown_time_hor==0:
+                    cooldown_time_hor = time.time()
+                    super_hor()
+                cool_down_hor = time.time() - cooldown_time_hor
+                if cool_down_hor>300:
+                    cool_down_hor=0
+                    cooldown_time_hor = time.time()
+                    super_hor()
+
+            if event.key==pygame.K_v:
+                if cooldown_time_vert==0:
+                    cooldown_time_vert = time.time()
+                    super_vert()
+                cool_down_vert = time.time() - cooldown_time_vert
+                if cool_down_vert>300:
+                    cool_down_vert=0
+                    cooldown_time_vert = time.time()
+                    super_vert()
         # Mouse event
         if event.type==pygame.MOUSEBUTTONDOWN:
             print(pygame.mouse.get_pos())
@@ -736,21 +761,21 @@ while True:
                 blockAppend()
             # Horizontal superpower
             elif mouseX in range(348,395) and mouseY in range(685,729):
-                if cooldown_time_hor==None:
+                if cooldown_time_hor==0:
                     cooldown_time_hor = time.time()
                     super_hor()
                 cool_down_hor = time.time() - cooldown_time_hor
-                if cool_down_hor>300:
+                if cool_down_hor>5:
                     cool_down_hor=0
                     cooldown_time_hor = time.time()
                     super_hor()
             # Vertical superpower
             elif mouseX in range(404,450) and mouseY in range(685,728):
-                if cooldown_time_vert==None:
+                if cooldown_time_vert==0:
                     cooldown_time_vert = time.time()
                     super_vert()
                 cool_down_vert = time.time() - cooldown_time_vert
-                if cool_down_vert>300:
+                if cool_down_vert>5:
                     cool_down_vert=0
                     cooldown_time_vert = time.time()
                     super_vert()
