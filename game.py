@@ -58,22 +58,19 @@ score = 0
 lastLoopPaused = False
 # highest score
 highest = 0
-# Horizontal superpower cooldown clicked
-cooldown_clicked_hor = False
-# Horizontal superpower cooldown time
-cooldown_time_hor = 0
-# Horizontal superpower cooldown duration
-cool_down_hor = time.time() - cooldown_time_hor
 # delay
 delay=0.02
-# Vertical superpower cooldown clicked
-cooldown_clicked_vert = False
-# Vertical superpower cooldown time
-cooldown_time_vert = 0
-# Vertical superpower cooldown duration
-cool_down_vert = 0
 # Merging Speed
 mergingSpeed = 3
+# The last time which horizontal superpower clicked
+cooldown_time_hor = None
+# Horizontal superpower cooldown duration
+cool_down_hor = 0
+# The last time which vertical superpower clicked
+cooldown_time_vert = None
+# Vertical superpower cooldown duration
+cool_down_vert = 0
+
 # Initial the game (start or restart)
 def resetGame():
     random.seed()
@@ -87,12 +84,22 @@ def resetGame():
         blocks.append([])
     global gameOver
     gameOver = False
+    global lastLoopPaused
     lastLoopPaused = False
+    global track
     track = random.randint(1,5)-1
+    global x_axis
     x_axis = 75+70*track
+    global y_axis
     y_axis = 226
+    global currentNumber
     currentNumber = pow(2,random.randint(1,5))
+    global nextNumber
     nextNumber = pow(2, random.randint(1,5))
+    global cooldown_time_hor
+    cooldown_time_hor = None
+    global cooldown_time_vert
+    cooldown_time_vert = None
     
     # Play already loaded background music, -1 => infinite replace
     pygame.mixer.music.play(-1)
@@ -513,8 +520,13 @@ def drawBorder():
     pygame.draw.rect(screen, white, (105,685,235,45), 0)
     for i in range(5):
         pygame.draw.lines(screen, white, True, [(75+i*70,150),(75+i*70,650)], 5)
-    #insert image
-    image = pygame.image.load("mute-2.png")
+    # Draw mute icon
+    if mute:
+        image = pygame.image.load("mute-2.png")
+        screen.blit(image, (402, 83))
+    else:
+        image = pygame.image.load("mute-1.png")
+        screen.blit(image, (402, 83))
     screen.blit(image, (402, 83))
     image = pygame.image.load("fire-4.png")
     screen.blit(image, (343, 678))
@@ -679,25 +691,23 @@ while True:
                 x_axis = 76+70*track
                 max_y_axis = 582-70*(len(blocks[track]))
                 blockAppend()
+            # Horizontal superpower
             elif mouseX in range(348,395) and mouseY in range(685,729):
-                if not cooldown_clicked_hor:
+                if cooldown_time_hor==None:
                     cooldown_time_hor = time.time()
                     super_hor()
-                    cool_down_hor = 0
-                    cooldown_clicked_hor = True
                 cool_down_hor = time.time() - cooldown_time_hor
-                if cool_down_hor>300:
-                    super_hor()
+                if cool_down_hor>5:
                     cool_down_hor=0
                     cooldown_time_hor = time.time()
+                    super_hor()
+            # Vertical superpower
             elif mouseX in range(404,450) and mouseY in range(685,728):
-                if not cooldown_clicked_vert:
+                if cooldown_time_vert==None:
                     cooldown_time_vert = time.time()
                     super_vert()
-                    cool_down_vert = 0
-                    cooldown_clicked_vert = True
                 cool_down_vert = time.time() - cooldown_time_vert
-                if cool_down_vert>300:
-                    super_vert()
+                if cool_down_vert>5:
                     cool_down_vert=0
                     cooldown_time_vert = time.time()
+                    super_vert()
