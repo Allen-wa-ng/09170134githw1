@@ -26,7 +26,7 @@ colorList = [(255,  0,  0), (  0,255,  0), (204,153,255), (209,237,  0), (209,23
 
 ### Screen set up
 screen = pygame.display.set_mode((500,750)) #display screen
-background = pygame.image.load('jaguar.jpg') #screen background
+background = pygame.image.load('bg3.jpg') #screen background
 background = pygame.transform.scale(background, (500, 750)) #screen background
 pygame.display.set_caption('2048 V.2') #caption
 
@@ -436,12 +436,12 @@ def getNewNextBlock():
     random.seed()
     track = random.randint(1,5)-1 #number of track 0~4
     currentNumber = nextNumber
-    if score > 40000:
-        nextNumber = pow(2, random.randint(4,10))
-    elif score > 15000:
-        nextNumber = pow(2, random.randint(1,7))
+    if score > 100000:
+        nextNumber = pow(2, random.randint(7,12))
+    elif score > 30000:
+        nextNumber = pow(2, random.randint(1,9))
     else:
-        nextNumber = pow(2,random.randint(1,6))
+        nextNumber = pow(2,random.randint(1,5))
     x_axis=75+70*track
     
 # Create a stable block
@@ -515,7 +515,7 @@ def drawBorder():
     pygame.draw.lines(screen, white, True,[(50,125),(450,125)],5)
     pygame.draw.lines(screen, white, True,[(75,220),(425,220)],5)
     # Draw rect
-    pygame.draw.rect(screen, nextBlockBorderColor, (175,81,37,37), 10)
+    pygame.draw.rect(screen, nextBlockBorderColor, (180,81,37,37), 10)
     pygame.draw.rect(screen, white, (50,25,400,650), 5)
     pygame.draw.rect(screen, white, (75,150,350,500), 5)
     pygame.draw.rect(screen, white, (50,685,45,45), 5)
@@ -534,12 +534,12 @@ def drawBorder():
 
 # Draw all text
 def drawAllTexts():
-    drawText('Drop The Number!', 'arial.ttf',32, (255,255,80), (110,35))
-    drawText('Next Block ►','arial.ttf',17,white,(57,88))
+    drawText('Drop The Number', 'arial.ttf',35, (0,0,0), (111,30))
+    drawText('Next Block ►','arial.ttf',20,white,(57,88))
     drawText('Score:'+str(score),'arial.ttf',25,black,(110,693))
-    drawText('II', 'arial.ttf',28,(255,255,255),(63,692))
+    drawText('II', 'arial.ttf',28,white,(63,692))
     for i in range(5):
-        drawText('†', 'arial.ttf',47,(255,0,0),(98+i*70,161))
+        drawText('†', 'arial.ttf',47,(0,0,0),(98+i*70,161))
         
 # Draw blocks
 def drawAllBlocks():
@@ -585,7 +585,7 @@ def drawTime():
 
 # Draw next block hint
 def drawNextBlock():
-    pygame.draw.rect(screen, colorList[int(getBaseLog(2,nextNumber))-1], (175,81,38,38), 0)
+    pygame.draw.rect(screen, colorList[int(getBaseLog(2,nextNumber))-1], (180,81,38,38), 0)
     drawText(str(nextNumber),'arial.ttf',18,black,(168+25-len(str(nextNumber))*5,89))
     global blocked_hor
     global blocked_vert
