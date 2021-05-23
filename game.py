@@ -74,11 +74,12 @@ cool_down_hor = 0
 cooldown_time_vert = None
 # Vertical superpower cooldown duration
 cool_down_vert = 0
-def playVideo(v):
+def playVideo(v,x,y):
     list1 =[]
-    for frame in glob.glob("power1/*.png"):
-        list1.append(frame)
-    return list1
+    for frame in glob.glob(v+"/*.png"):
+        image = pygame.image.load(frame)
+        screen.blit(image, (x,y))
+        
 # Initial the game (start or restart)
 def resetGame():
     random.seed()
