@@ -39,7 +39,7 @@ pygame.mixer.music.set_volume(0.5) #set volume
 blocked_hor = False
 blocked_vert = False
 # Cooldown time (s)
-cooldown_period=1
+cooldown_period=20
 #If mute
 mute = False
 # If the game is pause
@@ -74,6 +74,7 @@ cool_down_hor = 0
 cooldown_time_vert = None
 # Vertical superpower cooldown duration
 cool_down_vert = 0
+
 def playVideo(v,x,y,w,h):
     for frame in glob.glob(v+"/*.png"):
         image = pygame.image.load(frame)
@@ -131,7 +132,7 @@ def dropAboveBlocks(x, y):
 # a super power to remove the track that has the most elements
 def super_vert():
     max_track = getMaxTrack()
-    playVideo("power2",blocks[max_track][0][1]-140,blocks[max_track][0][2]-350, 350, 500)
+    playVideo("power1",blocks[max_track][0][1]-220,blocks[max_track][0][2]-250, 500, 350)
     for i in range(6):
         try:
             del blocks[max_track][0]
@@ -140,6 +141,8 @@ def super_vert():
 
 # a superpower to remove the first horizontal line
 def super_hor():
+    max_track = getMaxTrack()
+    playVideo("power2",-350,50, 1200, 750)
     for i in range(0,5):
         try:
             del blocks[i][0]
@@ -148,7 +151,6 @@ def super_hor():
         for j in range(len(blocks[i])):
             try:
                 blocks[i][j][2]+=70
-                print("dropped")
             except IndexError:
                 pass
 
@@ -554,10 +556,10 @@ def drawAllBlocks():
             for block in lineOfBlocksY:
                 if not gameOver:
                     drawBlock(block[0], block[1], block[2])
-    image = pygame.image.load("vertical-2.png")
-    screen.blit(image, (404, 681))
     image = pygame.image.load("fire-4.png")
-    screen.blit(image, (343, 678))
+    screen.blit(image, (402,678))
+    image = pygame.image.load("vertical-2.png")
+    screen.blit(image, (350, 678))
     
 # Draw time
 def drawTime():
@@ -606,8 +608,8 @@ def drawNextBlock():
         drawText('X','arial.ttf',60,black,(352,675))
     elif not pause:
         blocked_hor = False
-        image = pygame.image.load("fire-4.png")
-        screen.blit(image, (343, 678))
+        image = pygame.image.load("vertical-2.png")
+        screen.blit(image, (350, 678))
 
     if cdv<cooldown_period and cdv!=0:
         blocked_vert = True
@@ -615,8 +617,8 @@ def drawNextBlock():
         drawText('X','arial.ttf',60,black,(405,675))
     elif not pause:
         blocked_vert = False
-        image = pygame.image.load("vertical-2.png")
-        screen.blit(image, (404, 681))
+        image = pygame.image.load("fire-4.png")
+        screen.blit(image, (402,678))
 
 # Draw game over screen
 def drawGameOverScreen():
