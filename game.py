@@ -39,7 +39,7 @@ pygame.mixer.music.set_volume(0.5) #set volume
 blocked_hor = False
 blocked_vert = False
 # Cooldown time (s)
-cooldown_period=120
+cooldown_period=1
 #If mute
 mute = False
 # If the game is pause
@@ -131,7 +131,7 @@ def dropAboveBlocks(x, y):
 # a super power to remove the track that has the most elements
 def super_vert():
     max_track = getMaxTrack()
-    playVideo("power2",blocks[max_track][0][1],blocks[max_track][0][2]-290, 200, 400)
+    playVideo("power2",blocks[max_track][0][1]-140,blocks[max_track][0][2]-350, 350, 500)
     for i in range(6):
         try:
             del blocks[max_track][0]
