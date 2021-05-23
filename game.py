@@ -537,7 +537,7 @@ def drawAllTexts():
     drawText('Drop The Number', 'arial.ttf',35, (0,0,0), (111,30))
     drawText('Next Block ►','arial.ttf',20,white,(57,88))
     drawText('Score:'+str(score),'arial.ttf',25,black,(110,693))
-    drawText('II', 'arial.ttf',28,white,(63,692))
+    
     for i in range(5):
         drawText('†', 'arial.ttf',47,(0,0,0),(98+i*70,161))
         
@@ -577,8 +577,10 @@ def drawTime():
             startTime += pauseDuration
     lastLoopPaused = pause
     if pause:
+        drawText('►','arial.ttf',28,white,(61,692))
         duration = stopTimeText
     else:
+        drawText('II', 'arial.ttf',28,white,(63,692))
         duration = time.time() - startTime
         stopTimeText = duration
     drawText('TIME:'+getTimeformat(duration),'arial.ttf',20,black,(275,91)) #display clock
