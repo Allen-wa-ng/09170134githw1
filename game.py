@@ -131,6 +131,7 @@ def dropAboveBlocks(x, y):
 # a super power to remove the track that has the most elements
 def super_vert():
     max_track = getMaxTrack()
+    playVideo("power2",blocks[max_track][0][1],blocks[max_track][0][2]-450, 140, 500)
     for i in range(6):
         try:
             del blocks[max_track][0]
@@ -139,7 +140,6 @@ def super_vert():
 
 # a superpower to remove the first horizontal line
 def super_hor():
-    playVideo("power2",100,100,100,70)
     for i in range(0,5):
         try:
             del blocks[i][0]
