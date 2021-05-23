@@ -24,6 +24,10 @@ colorList = [(255,  0,  0), (  0,255,  0), (204,153,255), (209,237,  0), (209,23
              (209, 40,240), (254,239,222), (  0,239,222), (255,255, 80), ( 51,102,255), 
              (255,204,164), (153,255,153), (194,194,214)]
 
+# Icon set
+programIcon = pygame.image.load('snake.png')
+pygame.display.set_icon(programIcon)
+
 ### Screen set up
 screen = pygame.display.set_mode((500,750)) #display screen
 background = pygame.image.load('bg3.jpg') #screen background
