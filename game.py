@@ -539,8 +539,8 @@ def drawBorder():
 # Draw all text
 def drawAllTexts():
     drawText('Drop The Number', 'arial.ttf',35, colorList[int(getBaseLog(2,nextNumber))-1], (111,30))
-    drawText('Next Block ►','arial.ttf',20,white,(57,88))
-    drawText('Score:'+str(score),'arial.ttf',25,black,(110,693))
+    drawText('Next Block ►','arial.ttf',20, white,(57,88))
+    drawText('Score:'+str(score),'arial.ttf',25, black,(110,693))
     for i in range(5):
         drawText('†', 'arial.ttf',47,(0,0,0),(98+i*70,161))
         
