@@ -133,7 +133,7 @@ def dropAboveBlocks(x, y):
 def super_vert():
     max_track = getMaxTrack()
     try:
-        playVideo("power1",blocks[max_track][0][1]-220,blocks[max_track][0][2]-350, 500, 450)
+        playVideo("power1",blocks[max_track][0][1]-220,blocks[max_track][0][2]-367, 500, 500)
     except:
         pass
     for i in range(6):
