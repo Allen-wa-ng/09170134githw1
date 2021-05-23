@@ -76,7 +76,7 @@ cooldown_time_vert = None
 cool_down_vert = 0
 def playVideo(v):
     list1 =[]
-    for frame in glob.glob("power1/*.png"):
+    for frame in glob.glob(v+"/*.png"):
         list1.append(frame)
     return list1
 # Initial the game (start or restart)
