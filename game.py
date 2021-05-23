@@ -74,10 +74,11 @@ cool_down_hor = 0
 cooldown_time_vert = None
 # Vertical superpower cooldown duration
 cool_down_vert = 0
-def playVideo(v,x,y):
+def playVideo(v,x,y,w,h):
     for frame in glob.glob(v+"/*.png"):
         image = pygame.image.load(frame)
-        screen.blit(image, (x,y,100,100))
+        image = pygame.transform.smoothscale(image, (w,h)) 
+        screen.blit(image, (x,y))
         pygame.display.update()
         
 # Initial the game (start or restart)
@@ -138,7 +139,7 @@ def super_vert():
 
 # a superpower to remove the first horizontal line
 def super_hor():
-    playVideo("power2",100,100)
+    playVideo("power2",100,100,100,70)
     for i in range(0,5):
         try:
             del blocks[i][0]
