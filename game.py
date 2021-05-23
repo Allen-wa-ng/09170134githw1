@@ -677,7 +677,6 @@ while True:
 
         # Draw pop pause button
         if pause:
-
             image = pygame.image.load("pause.png")
             screen.blit(image, (140, 290))
             image = pygame.image.load("ball-1.png")
