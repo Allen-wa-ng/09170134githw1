@@ -74,11 +74,12 @@ cool_down_hor = 0
 cooldown_time_vert = None
 # Vertical superpower cooldown duration
 cool_down_vert = 0
-def playVideo(v,x,y):
-    list1 =[]
+def playVideo(v,x,y,w,h):
     for frame in glob.glob(v+"/*.png"):
         image = pygame.image.load(frame)
+        image = pygame.transform.smoothscale(image, (w,h)) 
         screen.blit(image, (x,y))
+        pygame.display.update()
         
 # Initial the game (start or restart)
 def resetGame():
@@ -130,6 +131,7 @@ def dropAboveBlocks(x, y):
 # a super power to remove the track that has the most elements
 def super_vert():
     max_track = getMaxTrack()
+    playVideo("power2",blocks[max_track][0][1],blocks[max_track][0][2]-290, 200, 400)
     for i in range(6):
         try:
             del blocks[max_track][0]
