@@ -43,7 +43,7 @@ pygame.mixer.music.set_volume(0.5) #set volume
 blocked_hor = False
 blocked_vert = False
 # Cooldown time (s)
-cooldown_period=20
+cooldown_period=180
 #If mute
 mute = False
 # If the game is pause
