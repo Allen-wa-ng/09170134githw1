@@ -44,7 +44,7 @@ blocked_hor = False
 blocked_vert = False
 # Cooldown time (s)
 cooldown_period=180
-#If mute
+# If mute
 mute = False
 # If the game is pause
 pause = False
@@ -135,7 +135,7 @@ def dropAboveBlocks(x, y):
 
 # a super power to remove the track that has the most elements
 def super_vert():
-    max_track = getMaxTrack()
+    max_track = getMaxTrack() 
     try:
         playVideo("power1",blocks[max_track][0][1]-220,blocks[max_track][0][2]-367, 500, 500)
     except:
@@ -468,7 +468,6 @@ def blockAppend():
     global blocks
     max_y_axis = 582-70*(len(blocks[track]))
     if max_y_axis > 223:
-        # print(blocks)
         block = [currentNumber, x_axis, max_y_axis]
         blocks[track].append(block)
         merge(track, len(blocks[track])-1)
